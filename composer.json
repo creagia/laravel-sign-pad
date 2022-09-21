@@ -1,0 +1,21 @@
+{
+    "name": "creagia/sign-pad",
+    "description": "Laravel package for of E-Signature with Signature Pad and Digital Certified Sign with TCPDF",
+    "type": "package",
+    "require": {
+        "elibyy/tcpdf-laravel": "^9.0"
+    },
+    "license": "MIT license",
+    "autoload": {
+        "psr-4": {
+            "Creagia\\SignPad\\": "packages/creagia/sign-pad/src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "creagia",
+            "email": "info@creagia.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
