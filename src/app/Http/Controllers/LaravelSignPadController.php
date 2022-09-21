@@ -1,12 +1,12 @@
 <?php
 
-namespace Creagia\SignPad\app\Http\Controllers;
+namespace Creagia\LaravelSignPad\app\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Elibyy\TCPDF\Facades\TCPDF;
 use Illuminate\Http\Request;
 
-class SignPadController extends Controller
+class LaravelSignPadController extends Controller
 {
     protected $pdf;
 

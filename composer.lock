@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c03731f843fa9fa2164e50690cf59de",
+    "content-hash": "9b08a89d5cb462a62c65668f291717da",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -99,23 +99,22 @@
         },
         {
             "name": "elibyy/tcpdf-laravel",
-            "version": "dev-master",
+            "version": "9.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/elibyy/tcpdf-laravel.git",
-                "reference": "5a7c5cd6f510c53d4b265cd37e1dde2633510343"
+                "reference": "53e1efec14de840b5206e864bfdbb83f1012dc6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/elibyy/tcpdf-laravel/zipball/5a7c5cd6f510c53d4b265cd37e1dde2633510343",
-                "reference": "5a7c5cd6f510c53d4b265cd37e1dde2633510343",
+                "url": "https://api.github.com/repos/elibyy/tcpdf-laravel/zipball/53e1efec14de840b5206e864bfdbb83f1012dc6f",
+                "reference": "53e1efec14de840b5206e864bfdbb83f1012dc6f",
                 "shasum": ""
             },
             "require": {
                 "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
                 "tecnickcom/tcpdf": "6.2.*|6.3.*|6.4.*|6.5.*|dev-main"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -150,9 +149,9 @@
             ],
             "support": {
                 "issues": "https://github.com/elibyy/tcpdf-laravel/issues",
-                "source": "https://github.com/elibyy/tcpdf-laravel/tree/master"
+                "source": "https://github.com/elibyy/tcpdf-laravel/tree/9.1.0"
             },
-            "time": "2022-08-12T15:07:50+00:00"
+            "time": "2022-08-12T15:05:04+00:00"
         },
         {
             "name": "illuminate/collections",
@@ -355,12 +354,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "bfe8df2f433b317f86ea7cb3de79728c671cafd8"
+                "reference": "720d5ce69156a3d76ee42b79ca5636f3b5010e15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/bfe8df2f433b317f86ea7cb3de79728c671cafd8",
-                "reference": "bfe8df2f433b317f86ea7cb3de79728c671cafd8",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/720d5ce69156a3d76ee42b79ca5636f3b5010e15",
+                "reference": "720d5ce69156a3d76ee42b79ca5636f3b5010e15",
                 "shasum": ""
             },
             "require": {
@@ -383,7 +382,7 @@
                 "league/commonmark": "Required to use Str::markdown() and Stringable::markdown() (^2.0.2).",
                 "ramsey/uuid": "Required to use Str::uuid() (^4.2.2).",
                 "symfony/process": "Required to use the composer class (^6.0).",
-                "symfony/uid": "Required to generate ULIDs for Eloquent (^6.0).",
+                "symfony/uid": "Required to use Str::ulid() (^6.0).",
                 "symfony/var-dumper": "Required to use the dd function (^6.0).",
                 "vlucas/phpdotenv": "Required to use the Env class and env helper (^5.4.1)."
             },
@@ -417,7 +416,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-09-15T19:24:25+00:00"
+            "time": "2022-09-19T14:27:45+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -1124,12 +1123,10 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "elibyy/tcpdf-laravel": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

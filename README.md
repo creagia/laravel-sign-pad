@@ -18,7 +18,7 @@ npm install signature_pad@4.0.0 --save
 You can install the package via composer:
 
 ```bash
-composer require creagia/sign-pad
+composer require creagia/laravel-sign-pad
 ```
 
 Publish the js assets, the config and the migration files
@@ -31,14 +31,14 @@ Add the js assets to your main javascript
 
 Open the `resources/js/app.js` file with your text editor and add the following line:
 
+```js
+import './creagia/laravel-sign-pad'
+```
+
 Execute the migrations
 
 ```bash
 php artisan migrate
-```
-
-```js
-import './creagia/sign-pad'
 ```
 
 ## Configuration
@@ -70,7 +70,7 @@ You should add the followind trait in the model where you want to sign a documen
 
 namespace App\Models;
 
-use Creagia\SignPad\Traits\RequiresSignature;
+use Creagia\LaravelSignPad\Traits\RequiresSignature;
 
 class MyModel extends Model
 {

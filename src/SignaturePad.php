@@ -1,6 +1,6 @@
 <?php
 
-namespace Creagia\SignPad;
+namespace Creagia\LaravelSignPad;
 
 use Illuminate\View\Component;
 

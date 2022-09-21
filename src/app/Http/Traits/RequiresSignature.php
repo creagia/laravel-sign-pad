@@ -1,6 +1,6 @@
 <?php
 
-namespace Creagia\SignPad\app\Http\Traits;
+namespace Creagia\LaravelSignPad\app\Http\Traits;
 
 trait RequiresSignature
 {

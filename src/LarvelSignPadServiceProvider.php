@@ -1,11 +1,11 @@
 <?php
 
-namespace Creagia\SignPad;
+namespace Creagia\LaravelSignPad;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
-class SignPadServiceProvider extends ServiceProvider
+class LarvelSignPadServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -14,7 +14,7 @@ class SignPadServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->make('Creagia\SignPad\app\Http\Controllers\SignPadController');
+        $this->app->make('Creagia\LaravelSignPad\app\Http\Controllers\LaravelSignPadController');
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'sign');
     }
 
