@@ -1,5 +1,3 @@
-@vite('resources/js/app.js')
-
 <form action="{{ route('sign-pad::signature')}}" method="POST">
     @csrf
     <div style="text-align: center">

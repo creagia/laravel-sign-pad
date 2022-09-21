@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('model_type', 255);
             $table->unsignedBigInteger('model_id');
             $table->string('file')->nullable();
+            $table->json('from_ips')->nullable();
             $table->timestamps();
         });
     }

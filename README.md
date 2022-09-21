@@ -1,7 +1,7 @@
-# PDF pad signature for laravel
+# Laravel PDF pad signature
 
-Laravel pad signature that generates
-a [certified PDF](https://www.prepressure.com/pdf/basics/certified-pdf#:~:text=A%20Certified%20PDF%20is%20a,errors%20or%20notifications%20were%20generated)
+A Laravel package to sign documents and generate
+ [certified PDFs](https://www.prepressure.com/pdf/basics/certified-pdf#:~:text=A%20Certified%20PDF%20is%20a,errors%20or%20notifications%20were%20generated)
 .
 
 ## Support us
@@ -49,9 +49,13 @@ the config file `config/sign.pad.php`
 
 You can also fill the `certificate_info` values in the same `config/sign.pad.php` to be more specific with the certificate.
 
+********
+
+In the published config file `config/sign-pad.php` you'll be able to configure many important aspects of the package, like the route name where users will be redirected after signing the document or where do you want to store the signed documents.
+
 ## Preparing your model
 
-You should add the following trait in the model where you want to sign a document:
+You should add a trait and two properties: `$pdfPrefix` and `$signPdfTemplate`. `$pdfPrefix` (optional) will change the name of the PDF file, and `$signPdfTemplate` will contain the location of the template which will be converted to a signed pdf:
 
 ```php
 <?php
@@ -64,13 +68,23 @@ class MyModel extends Model
 {
     use RequiresSignature;
     
-    public function getPdfTemplate(): View 
-    {
-        return view('pdf/sign-document', ['foo' => 'bar']);    
-    }
+    public string $signPdfTemplate = 'pdf/my-pdf-blade-template';
+    
+    public string $pdfPrefix = 'my-signed-pdf';
 }
 
 ?>
+```
+
+Take in account that an object `$model` will be automatically injected into the PDF template, so you will be able to access all the needed properties of the model.
+
+*******
+
+The Trait class will add 3 methods to your model:
+```php
+public function getSignatureRoute(): string //returns the post route for the form
+public function hasSignedDocument(): bool //returns if the document has been signed
+public function getSignedDocumentPath(): string //returns the path of the signed document
 ```
 
 ## Usage
@@ -78,17 +92,19 @@ class MyModel extends Model
 At this point, all you need is to create the form with the sign pad canvas in your template. You should call the method getSignatureUrl() from the instance of the model you prepared before as a route:
 
 ```html
-<form action="{{ $myModel->getSignatureRoute() }}" method="POST">
-    @csrf
-    <div style="text-align: center">
-        <x-creagia-signature-pad
-                width="500"
-                height="250"
-                border-color="#eaeaea"
-                pad-classes=""
-                button-classes="bg-gray-100 px-4 py-2 rounded-xl mt-4"
-        />
-    </div>
-</form>
-<script src="/vendor/sign-pad/sign-pad.min.js" />
+@if (!$myModel->hasSignedDocument())
+    <form action="{{ $myModel->getSignatureRoute() }}" method="POST">
+        @csrf
+        <div style="text-align: center">
+            <x-creagia-signature-pad
+                    width="500"
+                    height="250"
+                    border-color="#eaeaea"
+                    pad-classes=""
+                    button-classes="bg-gray-100 px-4 py-2 rounded-xl mt-4"
+            />
+        </div>
+    </form>
+    <script src="/vendor/sign-pad/sign-pad.min.js" />
+@endif
 ```
