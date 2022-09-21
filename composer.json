@@ -16,7 +16,19 @@
     ],
     "require": {
         "elibyy/tcpdf-laravel": "^9.0",
+        "illuminate/contracts": "^8.0|^9.0",
         "spatie/laravel-package-tools": "dev-main"
+    },
+    "require-dev": {
+        "nunomaduro/collision": "^5.10|^6.0",
+        "nunomaduro/larastan": "^1.0",
+        "orchestra/testbench": "^6.23|^7.0",
+        "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-laravel": "^1.1",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpunit/phpunit": "^9.5"
     },
     "extra": {
         "laravel": {
@@ -25,5 +37,11 @@
             ]
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    }
 }
