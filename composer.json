@@ -15,12 +15,13 @@
         }
     ],
     "require": {
-        "elibyy/tcpdf-laravel": "^9.0"
+        "elibyy/tcpdf-laravel": "^9.0",
+        "spatie/laravel-package-tools": "dev-main"
     },
     "extra": {
         "laravel": {
             "providers": [
-                "LarvelSignPadServiceProvider"
+                "Creagia\\LaravelSignPad\\LaravelSignPadServiceProvider"
             ]
         }
     },

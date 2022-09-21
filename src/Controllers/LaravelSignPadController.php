@@ -1,10 +1,13 @@
 <?php
 
-namespace Creagia\LaravelSignPad\app\Http\Controllers;
+namespace Creagia\LaravelSignPad\Controllers;
 
 use App\Http\Controllers\Controller;
 use Elibyy\TCPDF\Facades\TCPDF;
 use Illuminate\Http\Request;
+use function Creagia\LaravelSignPad\app\Http\Controllers\config;
+use function Creagia\LaravelSignPad\app\Http\Controllers\public_path;
+use function Creagia\LaravelSignPad\app\Http\Controllers\view;
 
 class LaravelSignPadController extends Controller
 {
