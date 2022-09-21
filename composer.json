@@ -17,7 +17,7 @@
     "require": {
         "elibyy/tcpdf-laravel": "^9.0",
         "illuminate/contracts": "^8.0|^9.0",
-        "spatie/laravel-package-tools": "dev-main"
+        "spatie/laravel-package-tools": "^1.12.1"
     },
     "require-dev": {
         "nunomaduro/collision": "^5.10|^6.0",

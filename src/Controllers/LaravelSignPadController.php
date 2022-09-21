@@ -16,7 +16,7 @@ class LaravelSignPadController
 
     public function sign()
     {
-        return view('sign::pad');
+        return view('laravel-sign-pad::pad');
     }
 
     public function index(Request $request)
@@ -37,7 +37,7 @@ class LaravelSignPadController
         $this->pdf::AddPage();
 
         // Print the view
-        $text = view('sign::template/pdf');
+        $text = view('laravel-sign-pad::template/pdf');
 
         // Add view content
         $this->pdf::writeHTML($text, true, 0, true, 0);

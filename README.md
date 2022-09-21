@@ -4,15 +4,6 @@ Laravel pad signature that generates
 a [certified PDF](https://www.prepressure.com/pdf/basics/certified-pdf#:~:text=A%20Certified%20PDF%20is%20a,errors%20or%20notifications%20were%20generated)
 .
 
-## Requirements
-
-You need to install the [szimek/signature_pad](https://github.com/szimek/signature_pad) npm package, which will be used
-as the signature input:
-
-```bash
-npm install signature_pad@4.0.0 --save
-```
-
 ## Installation
 
 You can install the package via composer:
@@ -21,25 +12,19 @@ You can install the package via composer:
 composer require creagia/laravel-sign-pad
 ```
 
-Publish the js assets, the config and the migration files
+Publish the config and the migration files and migrate the database
 
 ```bash
-php artisan vendor:publish --tag=sign-pad
+php artisan sign-pad:install
 ```
 
-Add the js assets to your main javascript
-
-Open the `resources/js/app.js` file with your text editor and add the following line:
-
-```js
-import './creagia/laravel-sign-pad'
-```
-
-Execute the migrations
+Publish the .js assets:
 
 ```bash
-php artisan migrate
+php artisan vendor:publish --tag=sign-pad-assets
 ```
+
+This will copy the file `sign-pad.js` inside the `public/vendor/sign-pad/` folder.
 
 ## Configuration
 
@@ -63,7 +48,7 @@ You can also fill the `certificate_info` values in the same `config/sign.pad.php
 
 ## Preparing your model
 
-You should add the followind trait in the model where you want to sign a document:
+You should add the following trait in the model where you want to sign a document:
 
 ```php
 <?php
@@ -76,9 +61,9 @@ class MyModel extends Model
 {
     use RequiresSignature;
     
-    public function getPdfTemplate():  
+    public function getPdfTemplate(): View 
     {
-        return view('pdf/sign-document', ['foo' => 'bar'])    
+        return view('pdf/sign-document', ['foo' => 'bar']);    
     }
 }
 
@@ -90,17 +75,17 @@ class MyModel extends Model
 At this point, all you need is to create the form with the sign pad canvas in your template. You should call the method getSignatureUrl() from the instance of the model you prepared before as a route:
 
 ```html
-
 <form action="{{ $myModel->getSignatureRoute() }}" method="POST">
     @csrf
     <div style="text-align: center">
-        <x-signature-pad
-            width="500"
-            height="250"
-            border-color="#eaeaea"
-            pad-classes=""
-            button-classes=""
+        <x-creagia-signature-pad
+                width="500"
+                height="250"
+                border-color="#eaeaea"
+                pad-classes=""
+                button-classes="bg-gray-100 px-4 py-2 rounded-xl mt-4"
         />
     </div>
 </form>
+<script src="/vendor/sign-pad/sign-pad.min.js" />
 ```

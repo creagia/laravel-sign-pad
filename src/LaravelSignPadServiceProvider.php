@@ -2,7 +2,8 @@
 
 namespace Creagia\LaravelSignPad;
 
-use Illuminate\Support\Facades\Blade;
+use Creagia\LaravelSignPad\Components\SignaturePad;
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -18,10 +19,18 @@ class LaravelSignPadServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-sign-pad')
             ->hasConfigFile()
-            ->hasViews()
+            ->hasViews('laravel-sign-pad')
             ->hasRoute('web')
             ->hasAssets()
-            ->hasViewComponent('signature-pad', SignaturePad::class)
-            ->hasMigration('create_pdf_signatures_table');
+            ->hasViewComponent('creagia', SignaturePad::class)
+            ->hasMigration('2022_09_21_115008_create_pdf_signatures_table')
+            ->hasInstallCommand(function (InstallCommand $command) {
+                $command
+                    ->publishConfigFile()
+                    ->publishMigrations()
+                    ->askToRunMigrations()
+                    ->copyAndRegisterServiceProviderInApp()
+                    ->askToStarRepoOnGitHub('creagia/laravel-sign-pad');
+            });
     }
 }

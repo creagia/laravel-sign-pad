@@ -1,6 +1,6 @@
 <?php
 
-namespace Creagia\LaravelSignPad;
+namespace Creagia\LaravelSignPad\Components;
 
 use Illuminate\View\Component;
 
@@ -40,6 +40,6 @@ class SignaturePad extends Component
      */
     public function render()
     {
-        return view('sign::components.signature-pad');
+        return view('laravel-sign-pad::components.signature-pad');
     }
 }
