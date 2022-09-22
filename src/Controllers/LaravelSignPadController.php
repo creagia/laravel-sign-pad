@@ -42,7 +42,7 @@ class LaravelSignPadController
                 $certificate,
                 '',
                 '',
-                app('sign-pad.cert_type'),
+                config('sign-pad.cert_type'),
                 config('sign-pad.certificate_info')
             );
         }
