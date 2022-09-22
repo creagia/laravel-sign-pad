@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pdf_signaturesa');
+        Schema::dropIfExists('pdf_signatures');
     }
 };
