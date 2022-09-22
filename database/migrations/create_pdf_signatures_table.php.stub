@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('pdf_signatures', function (Blueprint $table) {
             $table->id();
-            $table->string('model_type', 255);
-            $table->unsignedBigInteger('model_id');
+            $table->morphs('model');
             $table->string('file')->nullable();
             $table->boolean('certified')->default(false);
             $table->json('from_ips')->nullable();
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pdf_signaturesa');
+        Schema::dropIfExists('pdf_signatures');
     }
 };

@@ -23,7 +23,7 @@ class LaravelSignPadServiceProvider extends PackageServiceProvider
             ->hasRoute('web')
             ->hasAssets()
             ->hasViewComponent('creagia', SignaturePad::class)
-            ->hasMigration('2022_09_21_115008_create_pdf_signatures_table')
+            ->hasMigration('create_pdf_signatures_table')
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()

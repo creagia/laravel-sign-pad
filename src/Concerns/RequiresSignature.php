@@ -6,12 +6,17 @@ use Creagia\LaravelSignPad\Models\PdfSignature;
 
 trait RequiresSignature
 {
+    public function signatures()
+    {
+        return $this->morphMany(PdfSignature::class, 'model');
+    }
+
     public function getSignatureRoute(): string
     {
         return route('sign-pad::signature', [
             'model' => get_class($this),
             'id' => $this->id,
-            'token' => md5(config('app.key') . get_class($this))
+            'token' => md5(config('app.key').get_class($this)),
         ]);
     }
 
@@ -28,6 +33,6 @@ trait RequiresSignature
             ->where('model_id', $this->id)
             ->first();
 
-        return config('sign-pad.store_path') . '/' . $pdfSignature->file;
+        return config('sign-pad.store_path').'/'.$pdfSignature->file;
     }
 }
