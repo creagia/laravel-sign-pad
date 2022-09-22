@@ -6,7 +6,7 @@ return [
 
     'store_path' => public_path('signed-pdf'),
 
-    'redirect_url' => 'index',
+    'redirect_route_name' => null,
 
     'certificate_info' => [
         'Name' => '',
