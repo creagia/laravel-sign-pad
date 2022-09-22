@@ -32,14 +32,20 @@ class LaravelSignPadController
             abort(404);
         }
 
-        // Set certificate file
-        $certificate = 'file://' . config('sign-pad.certificate');
+        if (config('sign-pad.certify_documents') === true) {
+            // Set certificate file
+            $certificate = 'file://' . config('sign-pad.certificate_file');
 
-        // Set additional information in the signature
-        $info = config('sign-pad.certificate-info');
-
-        // Set document signature
-        $this->pdf::setSignature($certificate, $certificate, 'demo', '', 1, $info);
+            // Set document signature
+            $this->pdf::setSignature(
+                $certificate,
+                $certificate,
+                '',
+                '',
+                app('sign-pad.cert_type'),
+                config('sign-pad.certificate_info')
+            );
+        }
 
         // Decode signature image
         $encoded_image = explode(",", $request->sign)[1];
@@ -73,14 +79,23 @@ class LaravelSignPadController
             ? $model->pdfPrefix . $filename
             : 'document' . $filename;
 
-        $pdfSignature->file = $filename;
-        $pdfSignature->save();
-
         if (!File::isDirectory(config('sign-pad.store_path'))) {
             File::makeDirectory(config('sign-pad.store_path'), 0777, true, true);
         }
+
+        $pdfSignature->certified = (config('sign-pad.certify_documents') === true);
+
         // Save pdf file
-        $this->pdf::Output(config('sign-pad.store_path') . '/' . $filename, 'F');
+        try {
+            $this->pdf::Output(config('sign-pad.store_path') . '/' . $filename, 'F');
+        } catch (\Exception $e) {
+            $pdfSignature->certified = false;
+            File::delete(config('sign-pad.store_path') . '/' . $filename);
+            throw $e;
+        }
+
+        $pdfSignature->file = $filename;
+        $pdfSignature->save();
 
         return redirect()->route(config('sign-pad.redirect_route_name'));
     }
