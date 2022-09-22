@@ -82,9 +82,14 @@ Take in account that an object `$model` will be automatically injected into the 
 
 The Trait class will add 3 methods to your model:
 ```php
-public function getSignatureRoute(): string //returns the post route for the form
-public function hasSignedDocument(): bool //returns if the document has been signed
-public function getSignedDocumentPath(): string //returns the path of the signed document
+//returns the post route for the form
+public function getSignatureRoute(): string {}
+
+//returns if the document has been signed
+public function hasSignedDocument(): bool {}
+
+//returns the path of the signed document
+public function getSignedDocumentPath(): string {} 
 ```
 
 ## Usage
