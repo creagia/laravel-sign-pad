@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('pdf_signatures', function (Blueprint $table) {
             $table->id();
-            $table->string('model_type', 255);
-            $table->unsignedBigInteger('model_id');
+            $table->morphs('model');
             $table->string('file')->nullable();
             $table->json('from_ips')->nullable();
             $table->timestamps();
