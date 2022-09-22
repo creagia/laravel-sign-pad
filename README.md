@@ -55,7 +55,11 @@ In the published config file `config/sign-pad.php` you'll be able to configure m
 
 ## Preparing your model
 
-You should add a trait and two properties: `$pdfPrefix` and `$signPdfTemplate`. `$pdfPrefix` (optional) will change the name of the PDF file, and `$signPdfTemplate` will contain the location of the template which will be converted to a signed pdf:
+Add the `RequiresSignature` trait and implement the `CanBeSigned` class to the model you would like.
+
+You should define the location of the blade template which will be converted to a signed PDF creating the `getSignaturePdfTemplate` method.
+
+Finally, you can change the prefix of the generated PDF file with the `getSignaturePdfPrefix` method.
 
 ```php
 <?php
@@ -63,8 +67,9 @@ You should add a trait and two properties: `$pdfPrefix` and `$signPdfTemplate`. 
 namespace App\Models;
 
 use Creagia\LaravelSignPad\Traits\RequiresSignature;
+use Creagia\LaravelSignPad\Contracts\CanBeSigned;
 
-class MyModel extends Model
+class MyModel extends Model implements CanBeSigned
 {
     use RequiresSignature;
     
@@ -80,11 +85,8 @@ Take in account that an object `$model` will be automatically injected into the 
 
 *******
 
-The Trait class will add 3 methods to your model:
+The Trait class will add some methods to your model:
 ```php
-//returns the post route for the form
-public function getSignatureRoute(): string {}
-
 //returns if the document has been signed
 public function hasSignedDocument(): bool {}
 

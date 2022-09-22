@@ -11,6 +11,11 @@ trait RequiresSignature
         return $this->morphMany(PdfSignature::class, 'model');
     }
 
+    public function getSignaturePdfPrefix(): string
+    {
+        return 'document';
+    }
+
     public function getSignatureRoute(): string
     {
         return route('sign-pad::signature', [

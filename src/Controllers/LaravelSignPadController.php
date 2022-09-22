@@ -2,6 +2,7 @@
 
 namespace Creagia\LaravelSignPad\Controllers;
 
+use Creagia\LaravelSignPad\Contracts\CanBeSigned;
 use Creagia\LaravelSignPad\Models\PdfSignature;
 use Elibyy\TCPDF\Facades\TCPDF;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class LaravelSignPadController
         $model_id = (int) $request->input('id');
         $token = $request->input('token');
 
+        /** @var CanBeSigned $model */
         $model = app($model_type)->find($model_id);
 
         if ($token !== md5(config('app.key').$model_type)) {
@@ -47,14 +49,13 @@ class LaravelSignPadController
             );
         }
 
-        // Decode signature image
         $encoded_image = explode(',', $request->sign)[1];
         $decoded_image = base64_decode($encoded_image);
 
         $this->pdf::AddPage();
 
         // Print the view
-        $text = view(app($model_type)->signPdfTemplate, ['model' => $model]);
+        $text = view($model->getSignaturePdfTemplate(), ['model' => $model]);
 
         // Add view content
         $this->pdf::writeHTML($text, true, 0, true, 0);
@@ -74,10 +75,7 @@ class LaravelSignPadController
             ]
         );
 
-        $filename = $pdfSignature->id.'-'.rand(0, 9999).'.pdf';
-        $filename = isset($model->pdfPrefix)
-            ? $model->pdfPrefix.$filename
-            : 'document'.$filename;
+        $filename = $model->getSignaturePdfPrefix().$pdfSignature->id.'-'.rand(0, 9999).'.pdf';
 
         if (! File::isDirectory(config('sign-pad.store_path'))) {
             File::makeDirectory(config('sign-pad.store_path'), 0777, true, true);
