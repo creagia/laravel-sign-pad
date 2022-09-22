@@ -73,9 +73,15 @@ class MyModel extends Model implements CanBeSigned
 {
     use RequiresSignature;
     
-    public string $signPdfTemplate = 'pdf/my-pdf-blade-template';
-    
-    public string $pdfPrefix = 'my-signed-pdf';
+    public function getSignaturePdfTemplate(): string
+    {
+        return 'pdf/my-pdf-blade-template';
+    }
+
+    public function getSignaturePdfPrefix(): string
+    {
+        return 'my-signed-pdf';
+    }
 }
 
 ?>
