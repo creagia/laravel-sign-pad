@@ -82,6 +82,6 @@ class LaravelSignPadController
         // Save pdf file
         $this->pdf::Output(config('sign-pad.store_path') . '/' . $filename, 'F');
 
-        return redirect(route(config('sign-pad.redirect_url')));
+        return redirect()->route(config('sign-pad.redirect_route_name'));
     }
 }
