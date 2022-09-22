@@ -27,7 +27,7 @@ Publish the .js assets:
 php artisan vendor:publish --tag=sign-pad-assets
 ```
 
-This will copy the file `sign-pad.js` inside the `public/vendor/sign-pad/` folder.
+This will copy the package assets inside the `public/vendor/sign-pad/` folder.
 
 ## Configuration
 
@@ -105,6 +105,6 @@ At this point, all you need is to create the form with the sign pad canvas in yo
             />
         </div>
     </form>
-    <script src="/vendor/sign-pad/sign-pad.min.js" />
+    <script src="{{ asset('vendor/sign-pad/sign-pad.min.js') }}"></script>
 @endif
 ```
