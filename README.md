@@ -31,33 +31,13 @@ This will copy the package assets inside the `public/vendor/sign-pad/` folder.
 
 ## Configuration
 
-To certify your signature with TCPDF, you will have to create your own SSL certificate with OpenSSL. Otherwise you can
-find the TCPDF demo certificate
-here : [TCPDF Demo Certificate](https://github.com/tecnickcom/TCPDF/blob/main/examples/data/cert/tcpdf.crt)
-
-To create your own certificate use this command :
-
-```
-cd storage/app
-openssl req -x509 -nodes -days 365000 -newkey rsa:1024 -keyout certificate.crt -out certificate.crt
-```
-
-More information in the [TCPDF documentation](https://tcpdf.org/examples/example_052/)
-
-After generating the certificate, you can modify the location or the name of the generated file by changing the variable `certificate` from
-the config file `config/sign.pad.php`
-
-You can also fill the `certificate_info` values in the same `config/sign.pad.php` to be more specific with the certificate.
-
-********
-
 In the published config file `config/sign-pad.php` you'll be able to configure many important aspects of the package, like the route name where users will be redirected after signing the document or where do you want to store the signed documents.
 
 ## Preparing your model
 
 Add the `RequiresSignature` trait and implement the `CanBeSigned` class to the model you would like.
 
-You should define the location of the blade template which will be converted to a signed PDF creating the `getSignaturePdfTemplate` method.
+You should define the location of the blade template which will be converted to a signed PDF by implementing the `getSignaturePdfTemplate` method.
 
 Finally, you can change the prefix of the generated PDF file with the `getSignaturePdfPrefix` method.
 
@@ -66,7 +46,7 @@ Finally, you can change the prefix of the generated PDF file with the `getSignat
 
 namespace App\Models;
 
-use Creagia\LaravelSignPad\Traits\RequiresSignature;
+use Creagia\LaravelSignPad\Concerns\RequiresSignature;
 use Creagia\LaravelSignPad\Contracts\CanBeSigned;
 
 class MyModel extends Model implements CanBeSigned
@@ -102,22 +82,58 @@ public function getSignedDocumentPath(): string {}
 
 ## Usage
 
-At this point, all you need is to create the form with the sign pad canvas in your template. You should call the method getSignatureUrl() from the instance of the model you prepared before as a route:
+At this point, all you need is to create the form with the sign pad canvas in your template. For the route of the form, you have to call the method getSignatureUrl() from the instance of the model you prepared before:
 
 ```html
 @if (!$myModel->hasSignedDocument())
     <form action="{{ $myModel->getSignatureRoute() }}" method="POST">
         @csrf
         <div style="text-align: center">
-            <x-creagia-signature-pad
-                    width="500"
-                    height="250"
-                    border-color="#eaeaea"
-                    pad-classes=""
-                    button-classes="bg-gray-100 px-4 py-2 rounded-xl mt-4"
-            />
+            <x-creagia-signature-pad />
         </div>
     </form>
     <script src="{{ asset('vendor/sign-pad/sign-pad.min.js') }}"></script>
 @endif
 ```
+
+## Customizing the component
+
+From the same template, you can change the look of the component by passing some properties:
+- *width* and *height* (string or integer) for the size of the signing area
+- *border-color* (hex) to change the border color of the canvas
+- *pad-classes* and *button_classes* (strings) indicates which classes will have the sign area or the submit & clear buttons
+
+An example with an app using Tailwind would be:
+
+```html
+  <x-creagia-signature-pad
+      width="600"
+      height="300"
+      border-color="#eaeaea"
+      pad-classes="rounded-xl border-2"
+      button-classes="bg-gray-100 px-4 py-2 rounded-xl mt-4"
+  />
+```
+
+## Certifying the PDFs
+
+To certify your signature with TCPDF, you will have to create your own SSL certificate with OpenSSL. Otherwise you can
+find the TCPDF demo certificate
+here : [TCPDF Demo Certificate](https://github.com/tecnickcom/TCPDF/blob/main/examples/data/cert/tcpdf.crt)
+
+To create your own certificate use this command :
+
+```
+cd storage/app
+openssl req -x509 -nodes -days 365000 -newkey rsa:1024 -keyout certificate.crt -out certificate.crt
+```
+
+More information in the [TCPDF documentation](https://tcpdf.org/examples/example_052/)
+
+After generating the certificate, you'll have to change the value of the variable `certify_documents` in the `config/sign-pad.php` file and set it to **true**. 
+
+When the variable `certify_documents` is set to true, the package will search the file allocated in the `certificate_file` path to sign the documents. Feel free to modify the location or the name of certificate file by changing its value.
+
+Inside the same `config/sign-pad.php` we encourage you to fill all the fields of the array `certificate_info` to be more specific with the certificate.
+
+Finally, you can change the certificate type by modifying the value of the variable `cert_type` (by default 2). You can find more information about certificates types at [TCPDF setSignature reference](https://hooks.wbcomdesigns.com/reference/classes/tcpdf/setsignature/).
