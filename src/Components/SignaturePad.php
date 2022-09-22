@@ -7,9 +7,13 @@ use Illuminate\View\Component;
 class SignaturePad extends Component
 {
     public int $width;
+
     public int $height;
+
     public string $padClasses;
+
     public string $buttonClasses;
+
     public string $borderColor;
 
     /**

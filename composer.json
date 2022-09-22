@@ -3,11 +3,6 @@
     "description": "Laravel package for of E-Signature with Signature Pad and Digital Certified Sign with TCPDF",
     "type": "package",
     "license": "MIT license",
-    "autoload": {
-        "psr-4": {
-            "Creagia\\LaravelSignPad\\": "src"
-        }
-    },
     "authors": [
         {
             "name": "creagia",
@@ -28,7 +23,18 @@
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "friendsofphp/php-cs-fixer": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Creagia\\LaravelSignPad\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Creagia\\LaravelSignPad\\Tests\\": "tests"
+        }
     },
     "extra": {
         "laravel": {
@@ -36,6 +42,12 @@
                 "Creagia\\LaravelSignPad\\LaravelSignPadServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest coverage",
+        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
     },
     "minimum-stability": "dev",
     "config": {
