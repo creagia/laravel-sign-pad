@@ -51,7 +51,7 @@ class MyModel extends Model implements CanBeSigned
 {
     use RequiresSignature;
     
-    public function getSignaturePdfTemplate(): SignatureTemplate
+    public function getSignatureTemplate(): SignatureTemplate
     {
         return new SignatureTemplate(
             signaturePage: 1,
