@@ -10,9 +10,11 @@ class Signature extends Model
     protected $fillable = [
         'model_type',
         'model_id',
-        'file',
+        'uuid',
+        'filename',
+        'document_filename',
         'from_ips',
-        'certified'
+        'certified',
     ];
 
     protected $casts = [
@@ -23,5 +25,15 @@ class Signature extends Model
     public function model(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function getSignatureImagePath(): string
+    {
+        return config('sign-pad.store_path').'/'.$this->filename;
+    }
+
+    public function getSignedDocumentPath(): ?string
+    {
+        return $this->document_filename ? config('sign-pad.store_path').'/'.$this->document_filename : null;
     }
 }

@@ -20,15 +20,8 @@ trait RequiresSignature
         ]);
     }
 
-    public function hasSignedDocument(): bool
+    public function hasBeenSigned(): bool
     {
         return ! is_null($this->signature);
-    }
-
-    public function getSignedDocumentPath(): string
-    {
-        $signature = $this->signature->first();
-
-        return config('sign-pad.store_path').'/'.$signature->file;
     }
 }
