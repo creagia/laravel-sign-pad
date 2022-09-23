@@ -2,18 +2,13 @@
 
 namespace Creagia\LaravelSignPad\Concerns;
 
-use Creagia\LaravelSignPad\Models\PdfSignature;
+use Creagia\LaravelSignPad\Signature;
 
 trait RequiresSignature
 {
-    public function signatures()
+    public function signature()
     {
-        return $this->morphMany(PdfSignature::class, 'model');
-    }
-
-    public function getSignaturePdfPrefix(): string
-    {
-        return 'document';
+        return $this->morphOne(Signature::class, 'model');
     }
 
     public function getSignatureRoute(): string
@@ -27,17 +22,13 @@ trait RequiresSignature
 
     public function hasSignedDocument(): bool
     {
-        return PdfSignature::where('model_type', get_class($this))
-            ->where('model_id', $this->id)
-            ->count() > 0;
+        return ! is_null($this->signature);
     }
 
     public function getSignedDocumentPath(): string
     {
-        $pdfSignature = PdfSignature::where('model_type', get_class($this))
-            ->where('model_id', $this->id)
-            ->first();
+        $signature = $this->signature->first();
 
-        return config('sign-pad.store_path').'/'.$pdfSignature->file;
+        return config('sign-pad.store_path').'/'.$signature->file;
     }
 }

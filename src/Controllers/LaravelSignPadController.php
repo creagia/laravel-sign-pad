@@ -3,30 +3,37 @@
 namespace Creagia\LaravelSignPad\Controllers;
 
 use Creagia\LaravelSignPad\Contracts\CanBeSigned;
-use Creagia\LaravelSignPad\Models\PdfSignature;
-use Elibyy\TCPDF\Facades\TCPDF;
+use Creagia\LaravelSignPad\Signature;
+use Creagia\LaravelSignPad\SignatureTemplate;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use setasign\Fpdi\Tcpdf\Fpdi;
 
 class LaravelSignPadController
 {
-    protected $pdf;
+    protected Fpdi $pdf;
 
-    public function __construct(TCPDF $tcpdf)
+    protected ?SignatureTemplate $signaturePdfTemplate = null;
+
+    public function __construct(Fpdi $fpdiTcpdf)
     {
-        $this->pdf = $tcpdf;
+        $this->pdf = $fpdiTcpdf;
+        $this->pdf->SetPrintHeader(false);
+        $this->pdf->SetPrintFooter(false);
     }
 
     public function index(Request $request)
     {
-        $model_type = $request->input('model');
-        $model_id = (int) $request->input('id');
-        $token = $request->input('token');
+        $modelClass = $request->input('model');
+        $decodedImage = base64_decode(explode(',', $request->sign)[1]);
 
         /** @var CanBeSigned $model */
-        $model = app($model_type)->find($model_id);
+        $model = app($modelClass)->find((int) $request->input('id'));
+        $this->signaturePdfTemplate = $model->getSignatureTemplate();
 
-        if ($token !== md5(config('app.key').$model_type)) {
+        if ($request->input('token') !== md5(config('app.key').$modelClass)) {
             abort(404);
         }
 
@@ -34,12 +41,12 @@ class LaravelSignPadController
             abort(404);
         }
 
-        if (config('sign-pad.certify_documents') === true) {
+        if (config('sign-pad.certify_documents')) {
             // Set certificate file
             $certificate = 'file://'.config('sign-pad.certificate_file');
 
             // Set document signature
-            $this->pdf::setSignature(
+            $this->pdf->setSignature(
                 $certificate,
                 $certificate,
                 '',
@@ -49,52 +56,72 @@ class LaravelSignPadController
             );
         }
 
-        $encoded_image = explode(',', $request->sign)[1];
-        $decoded_image = base64_decode($encoded_image);
+        if ($this->signaturePdfTemplate->shouldUsePdfAsTemplate) {
+            $totalPdfPages = $this->pdf->setSourceFile($this->signaturePdfTemplate->pdfTemplatePath);
 
-        $this->pdf::AddPage();
-
-        // Print the view
-        $text = view($model->getSignaturePdfTemplate(), ['model' => $model]);
-
-        // Add view content
-        $this->pdf::writeHTML($text, true, 0, true, 0);
-
-        // Add image for signature
-        $this->pdf::Image('@'.$decoded_image, '', 50, 75, '', 'PNG');
-
-        // Define active area for signature appearance
-        $this->pdf::setSignatureAppearance(10, 50, 75, 35);
-
-        //save to the db
-        $pdfSignature = PdfSignature::create(
-            [
-                'model_type' => $model_type,
-                'model_id' => $model_id,
-                'from_ips' => $request->ips(),
-            ]
-        );
-
-        $filename = $model->getSignaturePdfPrefix().$pdfSignature->id.'-'.rand(0, 9999).'.pdf';
-
-        if (! File::isDirectory(config('sign-pad.store_path'))) {
-            File::makeDirectory(config('sign-pad.store_path'), 0777, true, true);
+            foreach (range(1, $totalPdfPages) as $pageNumber) {
+                $this->pdf->AddPage();
+                $tplIdx = $this->pdf->importPage($pageNumber);
+                $this->pdf->useTemplate($tplIdx, ['adjustPageSize' => true]);
+                if ($pageNumber === $this->signaturePdfTemplate->signaturePage) {
+                    $this->addSignature($decodedImage, $this->signaturePdfTemplate);
+                }
+            }
+        } else {
+            $this->pdf->AddPage();
+            $html = view($this->signaturePdfTemplate->bladeTemplateView, ['model' => $model]);
+            $this->pdf->writeHTML($html, true, 0, true, 0);
+            $this->addSignature($decodedImage, $this->signaturePdfTemplate);
         }
 
-        $pdfSignature->certified = (config('sign-pad.certify_documents') === true);
+        $uuid = Str::uuid()->toString();
+        $filename = $this->signaturePdfTemplate->outputPdfPrefix.'-'.$uuid.'.pdf';
 
-        // Save pdf file
+        File::ensureDirectoryExists(config('sign-pad.store_path'));
+
         try {
-            $this->pdf::Output(config('sign-pad.store_path').'/'.$filename, 'F');
-        } catch (\Exception $e) {
-            $pdfSignature->certified = false;
-            File::delete(config('sign-pad.store_path').'/'.$filename);
-            throw $e;
-        }
+            $this->pdf->Output(config('sign-pad.store_path').'/'.$filename, 'F');
 
-        $pdfSignature->file = $filename;
-        $pdfSignature->save();
+            $signature = Signature::create([
+                'model_type' => $model::class,
+                'model_id' => $model->id,
+                'from_ips' => $request->ips(),
+                'certified' => config('sign-pad.certify_documents'),
+                'file' => $filename,
+            ]);
+        } catch (Exception $exception) {
+            File::delete(config('sign-pad.store_path').'/'.$filename);
+            throw $exception;
+        }
 
         return redirect()->route(config('sign-pad.redirect_route_name'));
+    }
+
+    /**
+     * @param bool|string $decoded_image
+     * @param SignatureTemplate $signatureTemplate
+     * @return void
+     */
+    public function addSignature(bool|string $decoded_image, SignatureTemplate $signatureTemplate): void
+    {
+        // Add image for signature
+        $this->pdf->Image(
+            '@'.$decoded_image,
+            $signatureTemplate->signatureX,
+            $signatureTemplate->signatureY,
+            config('sign-pad.width') * 0.26458333 / 2,
+            config('sign-pad.height') * 0.26458333 / 2,
+            'PNG'
+        );
+
+        if (config('sign-pad.certify_documents')) {
+            // Define active area for signature appearance
+            $this->pdf->setSignatureAppearance(
+                $signatureTemplate->signatureX,
+                $signatureTemplate->signatureY,
+                config('sign-pad.width') * 0.26458333 / 2,
+                config('sign-pad.height') * 0.26458333 / 2,
+            );
+        }
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pdf_signatures', function (Blueprint $table) {
+        Schema::create('signatures', function (Blueprint $table) {
             $table->id();
             $table->morphs('model');
             $table->string('file')->nullable();
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pdf_signatures');
+        Schema::dropIfExists('signatures');
     }
 };

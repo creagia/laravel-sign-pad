@@ -31,7 +31,7 @@ class TestCase extends Orchestra
         $migration = include __DIR__.'/migrations/create_test_models_table.php.stub';
         $migration->up();
 
-        $migration = include __DIR__.'/../database/migrations/create_pdf_signatures_table.php.stub';
+        $migration = include __DIR__.'/../database/migrations/create_signatures_table.php.stub';
         $migration->up();
     }
 
