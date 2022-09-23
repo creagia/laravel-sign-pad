@@ -77,9 +77,7 @@ class LaravelSignPadController
         $uuid = Str::uuid()->toString();
         $filename = $this->signaturePdfTemplate->outputPdfPrefix.'-'.$uuid.'.pdf';
 
-        if (! File::isDirectory(config('sign-pad.store_path'))) {
-            File::makeDirectory(config('sign-pad.store_path'), 0777, true, true);
-        }
+        File::ensureDirectoryExists(config('sign-pad.store_path'));
 
         try {
             $this->pdf->Output(config('sign-pad.store_path').'/'.$filename, 'F');
