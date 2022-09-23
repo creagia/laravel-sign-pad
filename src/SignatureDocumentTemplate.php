@@ -2,7 +2,7 @@
 
 namespace Creagia\LaravelSignPad;
 
-class SignatureTemplate
+class SignatureDocumentTemplate
 {
     public bool $shouldUsePdfAsTemplate;
 

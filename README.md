@@ -40,8 +40,6 @@ In the published config file `config/sign-pad.php` you'll be able to configure m
 
 Add the `RequiresSignature` trait and implement the `CanBeSigned` class to the model you would like.
 
-You should define the signature template by implementing the `getSignatureTemplate` method.
-
 ```php
 <?php
 
@@ -53,10 +51,30 @@ use Creagia\LaravelSignPad\Contracts\CanBeSigned;
 class MyModel extends Model implements CanBeSigned
 {
     use RequiresSignature;
+
+}
+
+?>
+```
+
+If you want to generate PDF documents with the signature, you should implement the `ShouldGenerateSignatureDocument` class . Define your document template with the `getSignatureDocumentTemplate` method.
+
+```php
+<?php
+
+namespace App\Models;
+
+use Creagia\LaravelSignPad\Concerns\RequiresSignature;
+use Creagia\LaravelSignPad\Contracts\CanBeSigned;
+use Creagia\LaravelSignPad\Contracts\ShouldGenerateSignatureDocument;
+
+class MyModel extends Model implements CanBeSigned, ShouldGenerateSignatureDocument
+{
+    use RequiresSignature;
     
-    public function getSignatureTemplate(): SignatureTemplate
+    public function getSignatureDocumentTemplate(): SignatureDocumentTemplate
     {
-        return new SignatureTemplate(
+        return new SignatureDocumentTemplate(
             signaturePage: 1,
             signatureX: 20,
             signatureY: 25,
@@ -72,23 +90,12 @@ class MyModel extends Model implements CanBeSigned
 
 A `$model` object will be automatically injected into the Blade template, so you will be able to access all the needed properties of the model.
 
-*******
-
-The Trait class will add some methods to your model:
-```php
-//returns if the document has been signed
-public function hasSignedDocument(): bool {}
-
-//returns the path of the signed document
-public function getSignedDocumentPath(): string {} 
-```
-
 ## Usage
 
 At this point, all you need is to create the form with the sign pad canvas in your template. For the route of the form, you have to call the method getSignatureUrl() from the instance of the model you prepared before:
 
 ```html
-@if (!$myModel->hasSignedDocument())
+@if (!$myModel->hasBeenSigned())
     <form action="{{ $myModel->getSignatureRoute() }}" method="POST">
         @csrf
         <div style="text-align: center">
@@ -98,6 +105,13 @@ At this point, all you need is to create the form with the sign pad canvas in yo
     <script src="{{ asset('vendor/sign-pad/sign-pad.min.js') }}"></script>
 @endif
 ```
+
+### Retrieving signatures
+
+You can retrieve your model signature using the Eloquent relation `$myModel->signature`. After that,
+you can use the `getSignatureImagePath()` method to get the signature image and the `getSignedDocumentPath()`
+method to get the generated PDF document.
+
 
 ## Customizing the component
 

@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('signatures', function (Blueprint $table) {
             $table->id();
             $table->morphs('model');
-            $table->string('file')->nullable();
+            $table->string('uuid');
+            $table->string('filename');
+            $table->string('document_filename')->nullable();
             $table->boolean('certified')->default(false);
             $table->json('from_ips')->nullable();
             $table->timestamps();
