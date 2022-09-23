@@ -82,7 +82,7 @@ class LaravelSignPadController
         try {
             $this->pdf->Output(config('sign-pad.store_path').'/'.$filename, 'F');
 
-            $signature = Signature::create([
+            Signature::create([
                 'model_type' => $model::class,
                 'model_id' => $model->id,
                 'from_ips' => $request->ips(),
