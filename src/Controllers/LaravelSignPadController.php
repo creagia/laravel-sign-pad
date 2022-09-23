@@ -23,7 +23,7 @@ class LaravelSignPadController
         $this->pdf->SetPrintHeader(false);
         $this->pdf->SetPrintFooter(false);
         $this->pdf->SetMargins(PDF_MARGIN_LEFT-15, PDF_MARGIN_TOP-24, PDF_MARGIN_RIGHT-15);
-        $pdf->SetAutoPageBreak(TRUE, 0);
+        $this->pdf->SetAutoPageBreak(TRUE, 0);
     }
 
     public function index(Request $request)
