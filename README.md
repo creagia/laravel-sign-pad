@@ -37,9 +37,7 @@ In the published config file `config/sign-pad.php` you'll be able to configure m
 
 Add the `RequiresSignature` trait and implement the `CanBeSigned` class to the model you would like.
 
-You should define the location of the blade template which will be converted to a signed PDF by implementing the `getSignaturePdfTemplate` method.
-
-Finally, you can change the prefix of the generated PDF file with the `getSignaturePdfPrefix` method.
+You should define the signature template by implementing the `getSignatureTemplate` method.
 
 ```php
 <?php
@@ -53,21 +51,23 @@ class MyModel extends Model implements CanBeSigned
 {
     use RequiresSignature;
     
-    public function getSignaturePdfTemplate(): string
+    public function getSignaturePdfTemplate(): SignatureTemplate
     {
-        return 'pdf/my-pdf-blade-template';
-    }
-
-    public function getSignaturePdfPrefix(): string
-    {
-        return 'my-signed-pdf';
+        return new SignatureTemplate(
+            signaturePage: 1,
+            signatureX: 20,
+            signatureY: 25,
+            outputPdfPrefix: 'document', // optional
+            // pdfTemplatePath: storage_path('pdf/template.pdf'), // Uncomment for PDF template
+            // bladeTemplateView: 'pdf/my-pdf-blade-template', // Uncomment for Blade template
+        );
     }
 }
 
 ?>
 ```
 
-Take in account that an object `$model` will be automatically injected into the PDF template, so you will be able to access all the needed properties of the model.
+A `$model` object will be automatically injected into the Blade template, so you will be able to access all the needed properties of the model.
 
 *******
 
@@ -99,7 +99,6 @@ At this point, all you need is to create the form with the sign pad canvas in yo
 ## Customizing the component
 
 From the same template, you can change the look of the component by passing some properties:
-- *width* and *height* (string or integer) for the size of the signing area
 - *border-color* (hex) to change the border color of the canvas
 - *pad-classes* and *button_classes* (strings) indicates which classes will have the sign area or the submit & clear buttons
 
@@ -107,8 +106,6 @@ An example with an app using Tailwind would be:
 
 ```html
   <x-creagia-signature-pad
-      width="600"
-      height="300"
       border-color="#eaeaea"
       pad-classes="rounded-xl border-2"
       button-classes="bg-gray-100 px-4 py-2 rounded-xl mt-4"

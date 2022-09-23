@@ -2,11 +2,11 @@
 
 namespace Creagia\LaravelSignPad\Contracts;
 
+use Creagia\LaravelSignPad\SignatureTemplate;
+
 interface CanBeSigned
 {
-    public function getSignaturePdfTemplate(): string;
-
-    public function getSignaturePdfPrefix(): string;
+    public function getSignatureTemplate(): SignatureTemplate;
 
     public function getSignatureRoute(): string;
 

@@ -22,14 +22,14 @@ class SignaturePad extends Component
      * @return void
      */
     public function __construct(
-        $width = 600,
-        $height = 200,
+        $width = null,
+        $height = null,
         $padClasses = '',
         $buttonClasses = '',
         $borderColor = '#777777'
     ) {
-        $this->width = $width;
-        $this->height = $height;
+        $this->width = $width ?? config('sign-pad.width');
+        $this->height = $height ?? config('sign-pad.height');
 
         $this->padClasses = $padClasses;
         $this->buttonClasses = $buttonClasses;

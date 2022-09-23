@@ -1,11 +1,11 @@
 <?php
 
-namespace Creagia\LaravelSignPad\Models;
+namespace Creagia\LaravelSignPad;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class PdfSignature extends Model
+class Signature extends Model
 {
     protected $fillable = ['model_type', 'model_id', 'file', 'from_ips'];
 
