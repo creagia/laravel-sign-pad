@@ -12,7 +12,7 @@
     "require": {
         "illuminate/contracts": "^8.0|^9.0",
         "spatie/laravel-package-tools": "^1.12.1",
-        "setasign/fpdi": "dev-master",
+        "setasign/fpdi": "^v2.0.0",
         "tecnickcom/tcpdf": "dev-main"
     },
     "require-dev": {
