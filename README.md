@@ -1,11 +1,14 @@
-# Laravel PDF pad signature
+# Laravel pad signature
 
-A Laravel package to sign documents and generate
- [certified PDFs](https://www.prepressure.com/pdf/basics/certified-pdf#:~:text=A%20Certified%20PDF%20is%20a,errors%20or%20notifications%20were%20generated)
-.
+A Laravel package to sign documents and optionally generate
+ [certified PDFs](https://www.prepressure.com/pdf/basics/certified-pdf#:~:text=A%20Certified%20PDF%20is%20a,errors%20or%20notifications%20were%20generated) associated to a Eloquent model.
 
 ## Support us
 [<img width="570" alt="Laradir banner" src="https://user-images.githubusercontent.com/240932/189903723-2c015907-b8c9-4ff7-b6e6-2c8cf10aea16.png">](https://laradir.com/?utm_campaign=github&utm_medium=banner&utm_term=laravel-web-mailer)
+
+## Requirements
+
+Laravel pad signature requires **PHP 8+** and **Laravel 8+**.
 
 ## Installation
 
