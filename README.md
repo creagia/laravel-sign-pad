@@ -67,6 +67,8 @@ namespace App\Models;
 use Creagia\LaravelSignPad\Concerns\RequiresSignature;
 use Creagia\LaravelSignPad\Contracts\CanBeSigned;
 use Creagia\LaravelSignPad\Contracts\ShouldGenerateSignatureDocument;
+use Creagia\LaravelSignPad\Templates\BladeDocumentTemplate;
+use Creagia\LaravelSignPad\Templates\PdfDocumentTemplate;
 
 class MyModel extends Model implements CanBeSigned, ShouldGenerateSignatureDocument
 {
@@ -79,8 +81,8 @@ class MyModel extends Model implements CanBeSigned, ShouldGenerateSignatureDocum
             signatureX: 20,
             signatureY: 25,
             outputPdfPrefix: 'document', // optional
-            // pdfTemplatePath: storage_path('pdf/template.pdf'), // Uncomment for PDF template
-            // bladeTemplateView: 'pdf/my-pdf-blade-template', // Uncomment for Blade template
+            // template: new BladeDocumentTemplate('pdf/my-pdf-blade-template'), // Uncomment for Blade template
+            // template: new PdfDocumentTemplate(storage_path('pdf/template.pdf')), // Uncomment for PDF template
         );
     }
 }

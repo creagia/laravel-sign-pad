@@ -6,6 +6,8 @@ use Creagia\LaravelSignPad\Contracts\CanBeSigned;
 use Creagia\LaravelSignPad\Contracts\ShouldGenerateSignatureDocument;
 use Creagia\LaravelSignPad\Signature;
 use Creagia\LaravelSignPad\SignatureDocumentTemplate;
+use Creagia\LaravelSignPad\Templates\BladeDocumentTemplate;
+use Creagia\LaravelSignPad\Templates\PdfDocumentTemplate;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -98,8 +100,8 @@ class LaravelSignPadController
      */
     public function generateDocument(string $decodedImage, Signature $signature): void
     {
-        if ($this->signatureDocumentTemplate->shouldUsePdfAsTemplate()) {
-            $totalPdfPages = $this->pdf->setSourceFile($this->signatureDocumentTemplate->pdfTemplatePath);
+        if ($this->signatureDocumentTemplate->template instanceof PdfDocumentTemplate) {
+            $totalPdfPages = $this->pdf->setSourceFile($this->signatureDocumentTemplate->template->path);
 
             foreach (range(1, $totalPdfPages) as $pageNumber) {
                 $this->pdf->AddPage();
@@ -109,9 +111,10 @@ class LaravelSignPadController
                     $this->addSignature($decodedImage, $this->signatureDocumentTemplate);
                 }
             }
-        } else {
+        }
+        if ($this->signatureDocumentTemplate->template instanceof BladeDocumentTemplate) {
             $this->pdf->AddPage();
-            $html = view($this->signatureDocumentTemplate->bladeTemplateView, ['model' => $signature->model]);
+            $html = view($this->signatureDocumentTemplate->template->path, ['model' => $signature->model]);
             $this->pdf->writeHTML($html, true, 0, true, 0);
             $this->addSignature($decodedImage, $this->signatureDocumentTemplate);
         }
