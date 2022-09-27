@@ -70,7 +70,7 @@ class LaravelSignPadController
             $this->generateDocument($decodedImage, $signature);
         }
 
-        return redirect()->route(config('sign-pad.redirect_route_name'));
+        return redirect()->route(config('sign-pad.redirect_route_name'), ['uuid' => $uuid]);
     }
 
     public function certifyDocument(): void
