@@ -113,8 +113,13 @@ At this point, all you need is to create the form with the sign pad canvas in yo
 ### Retrieving signatures
 
 You can retrieve your model signature using the Eloquent relation `$myModel->signature`. After that,
-you can use the `getSignatureImagePath()` method to get the signature image and the `getSignedDocumentPath()`
-method to get the generated PDF document.
+you can use
+- `getSignatureImagePath()` method in the relation to get the signature image.
+- `getSignedDocumentPath()` method in the relation to get the generated PDF document.
+```php
+echo $myModel->signature->getSignatureImagePath();
+echo $myModel->signature->getSignedDocumentPath();
+```
 
 
 ## Customizing the component
