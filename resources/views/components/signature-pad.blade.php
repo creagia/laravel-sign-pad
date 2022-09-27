@@ -1,5 +1,5 @@
 <div id="e-signpad" style="display: flex; flex-direction: column; align-items: center">
-    <canvas style="touch-action: none; border: 1px solid {{ $borderColor }}"
+    <canvas style="touch-action: none; border: 1px solid {{ $borderColor }}; max-width: 100%"
             width="{{ $width }}"
             height="{{ $height }}"
             class="{{ $padClasses }}"></canvas>
