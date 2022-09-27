@@ -1,3 +1,5 @@
 <?php
 
-Route::post('creagia/sign-pdf', [\Creagia\LaravelSignPad\Controllers\LaravelSignPadController::class, 'index'])->name('sign-pad::signature');
+use Creagia\LaravelSignPad\Controllers\LaravelSignPadController;
+
+Route::post('creagia/sign-pdf', LaravelSignPadController::class)->name('sign-pad::signature');
