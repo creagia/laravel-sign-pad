@@ -98,7 +98,7 @@ class LaravelSignPadController
      */
     public function generateDocument(string $decodedImage, Signature $signature): void
     {
-        if ($this->signatureDocumentTemplate->shouldUsePdfAsTemplate) {
+        if ($this->signatureDocumentTemplate->shouldUsePdfAsTemplate()) {
             $totalPdfPages = $this->pdf->setSourceFile($this->signatureDocumentTemplate->pdfTemplatePath);
 
             foreach (range(1, $totalPdfPages) as $pageNumber) {
