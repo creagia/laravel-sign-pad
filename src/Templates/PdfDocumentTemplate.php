@@ -16,5 +16,7 @@ class PdfDocumentTemplate extends DocumentTemplate
             $tplIdx = $pdf->importPage($pageNumber);
             $pdf->useTemplate($tplIdx, ['adjustPageSize' => true]);
         }
+
+        return $pdf;
     }
 }
