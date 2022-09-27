@@ -117,7 +117,8 @@ method to get the generated PDF document.
 
 From the same template, you can change the look of the component by passing some properties:
 - *border-color* (hex) to change the border color of the canvas
-- *pad-classes* and *button_classes* (strings) indicates which classes will have the sign area or the submit & clear buttons
+- *pad-classes* and *button-classes* (strings) indicates which classes will have the sign area or the submit & clear buttons
+- *clear-name* and *submit-name* (strings) allows you to modify de default "Submit" and "Clear" values of the buttons.
 
 An example with an app using Tailwind would be:
 
@@ -126,6 +127,8 @@ An example with an app using Tailwind would be:
       border-color="#eaeaea"
       pad-classes="rounded-xl border-2"
       button-classes="bg-gray-100 px-4 py-2 rounded-xl mt-4"
+      clear-name="Clear"
+      submit-name="Submit"
   />
 ```
 
