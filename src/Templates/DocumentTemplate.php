@@ -10,6 +10,10 @@ use setasign\Fpdi\Tcpdf\Fpdi;
 
 abstract class DocumentTemplate
 {
+    /**
+     * @phpstan-param view-string $path
+     * @param string $path
+     */
     public function __construct(
         public string $path
     ) {

@@ -11,7 +11,7 @@ class BladeDocumentTemplate extends DocumentTemplate
     {
         $pdf->AddPage();
         $html = view($this->path, ['model' => $signature->model]);
-        $pdf->writeHTML($html, true, 0, true, 0);
+        $pdf->writeHTML($html, true, false, true, false);
 
         return $pdf;
     }

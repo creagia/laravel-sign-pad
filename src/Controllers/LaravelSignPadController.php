@@ -8,6 +8,7 @@ use Creagia\LaravelSignPad\Contracts\ShouldGenerateSignatureDocument;
 use Creagia\LaravelSignPad\Exceptions\ModelHasAlreadyBeenSigned;
 use Creagia\LaravelSignPad\Signature;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -17,7 +18,7 @@ class LaravelSignPadController
 {
     use ValidatesRequests;
 
-    public function __invoke(Request $request, GenerateSignatureDocumentAction $generateSignatureDocumentAction)
+    public function __invoke(Request $request, GenerateSignatureDocumentAction $generateSignatureDocumentAction): \Illuminate\Http\RedirectResponse
     {
         $validatedData = $this->validate($request, [
             'model' => ['required'],

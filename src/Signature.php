@@ -5,6 +5,10 @@ namespace Creagia\LaravelSignPad;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
+/**
+ * @property string $uuid
+ * @property ?string $document_filename
+ */
 class Signature extends Model
 {
     protected $fillable = [
@@ -17,6 +21,9 @@ class Signature extends Model
         'certified',
     ];
 
+    /**
+     * @var array<string>
+     */
     protected $casts = [
         'from_ips' => 'array',
         'certified' => 'boolean',
@@ -29,11 +36,11 @@ class Signature extends Model
 
     public function getSignatureImagePath(): string
     {
-        return config('sign-pad.store_path').'/'.$this->filename;
+        return config('sign-pad.store_path').'/'.$this->attributes['filename'];
     }
 
     public function getSignedDocumentPath(): ?string
     {
-        return $this->document_filename ? config('sign-pad.store_path').'/'.$this->document_filename : null;
+        return $this->attributes['document_filename'] ? config('sign-pad.store_path').'/'.$this->attributes['document_filename'] : null;
     }
 }
