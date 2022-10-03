@@ -2,7 +2,7 @@
     "name": "creagia/laravel-sign-pad",
     "description": "Laravel package for of E-Signature with Signature Pad and Digital Certified Sign with TCPDF",
     "type": "package",
-    "license": "MIT license",
+    "license": "MIT",
     "authors": [
         {
             "name": "creagia",
