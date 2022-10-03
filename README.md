@@ -1,0 +1,170 @@
+# Laravel pad signature
+
+A Laravel package to sign documents and optionally generate
+ [certified PDFs](https://www.prepressure.com/pdf/basics/certified-pdf#:~:text=A%20Certified%20PDF%20is%20a,errors%20or%20notifications%20were%20generated) associated to a Eloquent model.
+
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/creagia/laravel-sign-pad.svg?style=flat-square)](https://packagist.org/packages/creagia/laravel-sign-pad)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/creagia/laravel-sign-pad/run-tests?label=tests)](https://github.com/creagia/laravel-sign-pad/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/creagia/laravel-sign-pad/Check%20&%20fix%20styling?label=code%20style)](https://github.com/creagia/laravel-sign-pad/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/creagia/laravel-sign-pad.svg?style=flat-square)](https://packagist.org/packages/creagia/laravel-sign-pad)
+
+## Support us
+[<img width="570" alt="Laradir banner" src="https://user-images.githubusercontent.com/240932/189903723-2c015907-b8c9-4ff7-b6e6-2c8cf10aea16.png">](https://laradir.com/?utm_campaign=github&utm_medium=banner&utm_term=laravel-sign-pad)
+
+## Requirements
+
+Laravel pad signature requires **PHP 8.0 or 8.1** and **Laravel 8 or 9**.
+
+## Installation
+
+You can install the package via composer:
+
+```bash
+composer require creagia/laravel-sign-pad
+```
+
+Publish the config and the migration files and migrate the database
+
+```bash
+php artisan sign-pad:install
+```
+
+Publish the .js assets:
+
+```bash
+php artisan vendor:publish --tag=sign-pad-assets
+```
+
+This will copy the package assets inside the `public/vendor/sign-pad/` folder.
+
+## Configuration
+
+In the published config file `config/sign-pad.php` you'll be able to configure many important aspects of the package, like the route name where users will be redirected after signing the document or where do you want to store the signed documents.
+
+Notice that the redirect_route_name will receive the parameter `$uuid` with the uuid of the signature model in the database. 
+
+## Preparing your model
+
+Add the `RequiresSignature` trait and implement the `CanBeSigned` class to the model you would like.
+
+```php
+<?php
+
+namespace App\Models;
+
+use Creagia\LaravelSignPad\Concerns\RequiresSignature;
+use Creagia\LaravelSignPad\Contracts\CanBeSigned;
+
+class MyModel extends Model implements CanBeSigned
+{
+    use RequiresSignature;
+
+}
+
+?>
+```
+
+If you want to generate PDF documents with the signature, you should implement the `ShouldGenerateSignatureDocument` class . Define your document template with the `getSignatureDocumentTemplate` method.
+
+```php
+<?php
+
+namespace App\Models;
+
+use Creagia\LaravelSignPad\Concerns\RequiresSignature;
+use Creagia\LaravelSignPad\Contracts\CanBeSigned;
+use Creagia\LaravelSignPad\Contracts\ShouldGenerateSignatureDocument;
+use Creagia\LaravelSignPad\Templates\BladeDocumentTemplate;
+use Creagia\LaravelSignPad\Templates\PdfDocumentTemplate;
+
+class MyModel extends Model implements CanBeSigned, ShouldGenerateSignatureDocument
+{
+    use RequiresSignature;
+    
+    public function getSignatureDocumentTemplate(): SignatureDocumentTemplate
+    {
+        return new SignatureDocumentTemplate(
+            signaturePage: 1,
+            signatureX: 20,
+            signatureY: 25,
+            outputPdfPrefix: 'document', // optional
+            // template: new BladeDocumentTemplate('pdf/my-pdf-blade-template'), // Uncomment for Blade template
+            // template: new PdfDocumentTemplate(storage_path('pdf/template.pdf')), // Uncomment for PDF template
+        );
+    }
+}
+
+?>
+```
+
+A `$model` object will be automatically injected into the Blade template, so you will be able to access all the needed properties of the model.
+
+## Usage
+
+At this point, all you need is to create the form with the sign pad canvas in your template. For the route of the form, you have to call the method getSignatureUrl() from the instance of the model you prepared before:
+
+```html
+@if (!$myModel->hasBeenSigned())
+    <form action="{{ $myModel->getSignatureRoute() }}" method="POST">
+        @csrf
+        <div style="text-align: center">
+            <x-creagia-signature-pad />
+        </div>
+    </form>
+    <script src="{{ asset('vendor/sign-pad/sign-pad.min.js') }}"></script>
+@endif
+```
+
+### Retrieving signatures
+
+You can retrieve your model signature using the Eloquent relation `$myModel->signature`. After that,
+you can use
+- `getSignatureImagePath()` method in the relation to get the signature image.
+- `getSignedDocumentPath()` method in the relation to get the generated PDF document.
+```php
+echo $myModel->signature->getSignatureImagePath();
+echo $myModel->signature->getSignedDocumentPath();
+```
+
+
+## Customizing the component
+
+From the same template, you can change the look of the component by passing some properties:
+- *border-color* (hex) to change the border color of the canvas
+- *pad-classes* and *button-classes* (strings) indicates which classes will have the sign area or the submit & clear buttons
+- *clear-name* and *submit-name* (strings) allows you to modify de default "Submit" and "Clear" values of the buttons.
+
+An example with an app using Tailwind would be:
+
+```html
+  <x-creagia-signature-pad
+      border-color="#eaeaea"
+      pad-classes="rounded-xl border-2"
+      button-classes="bg-gray-100 px-4 py-2 rounded-xl mt-4"
+      clear-name="Clear"
+      submit-name="Submit"
+  />
+```
+
+## Certifying the PDFs
+
+To certify your signature with TCPDF, you will have to create your own SSL certificate with OpenSSL. Otherwise you can
+find the TCPDF demo certificate
+here : [TCPDF Demo Certificate](https://github.com/tecnickcom/TCPDF/blob/main/examples/data/cert/tcpdf.crt)
+
+To create your own certificate use this command :
+
+```
+cd storage/app
+openssl req -x509 -nodes -days 365000 -newkey rsa:1024 -keyout certificate.crt -out certificate.crt
+```
+
+More information in the [TCPDF documentation](https://tcpdf.org/examples/example_052/)
+
+After generating the certificate, you'll have to change the value of the variable `certify_documents` in the `config/sign-pad.php` file and set it to **true**. 
+
+When the variable `certify_documents` is set to true, the package will search the file allocated in the `certificate_file` path to sign the documents. Feel free to modify the location or the name of certificate file by changing its value.
+
+Inside the same `config/sign-pad.php` we encourage you to fill all the fields of the array `certificate_info` to be more specific with the certificate.
+
+Finally, you can change the certificate type by modifying the value of the variable `cert_type` (by default 2). You can find more information about certificates types at [TCPDF setSignature reference](https://hooks.wbcomdesigns.com/reference/classes/tcpdf/setsignature/).
