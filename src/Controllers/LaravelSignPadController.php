@@ -65,7 +65,10 @@ class LaravelSignPadController
                 $decodedImage
             );
         }
+        if (config('sign-pad.redirect_route_name')) {
+            return redirect()->route(config('sign-pad.redirect_route_name'), ['uuid' => $uuid]);
+        }
 
-        return redirect()->route(config('sign-pad.redirect_route_name'), ['uuid' => $uuid]);
+        return redirect()->back();
     }
 }
