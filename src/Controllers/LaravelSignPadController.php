@@ -24,6 +24,7 @@ class LaravelSignPadController
             'sign' => ['required'],
             'id' => ['required'],
             'token' => ['required'],
+            'redirect_to' => ['nullable'],
         ]);
 
         $modelClass = $validatedData['model'];
@@ -65,6 +66,11 @@ class LaravelSignPadController
                 $decodedImage
             );
         }
+
+        if ($validatedData['redirect_to']) {
+            return redirect($validatedData['redirect_to']);
+        }
+
         if (config('sign-pad.redirect_route_name')) {
             return redirect()->route(config('sign-pad.redirect_route_name'), ['uuid' => $uuid]);
         }
