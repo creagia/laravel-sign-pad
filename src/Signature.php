@@ -4,6 +4,7 @@ namespace Creagia\LaravelSignPad;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Facades\File;
 
 /**
  * @property string $uuid
@@ -11,6 +12,15 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  */
 class Signature extends Model
 {
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function ($model) {
+            File::delete($model->getSignatureImagePath());
+        });
+    }
+
     protected $fillable = [
         'model_type',
         'model_id',
