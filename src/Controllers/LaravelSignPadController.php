@@ -56,7 +56,7 @@ class LaravelSignPadController
         ]);
 
         File::ensureDirectoryExists(config('sign-pad.store_path'));
-        File::put(config('sign-pad.store_path').'/'.$filename, $decodedImage);
+        File::put($signature->getSignatureImagePath(), $decodedImage);
 
         if ($model instanceof ShouldGenerateSignatureDocument) {
             ($generateSignatureDocumentAction)(
