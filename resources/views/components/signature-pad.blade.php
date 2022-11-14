@@ -5,8 +5,8 @@
             class="{{ $padClasses }}"></canvas>
     <div>
         <input type="hidden" name="sign" id="sign">
-        <button id="sign-pad-button-clear" type="button" class="{{$buttonClasses}}"> {{$clearName}}</button>
-        <button id="sign-pad-button-submit" type="submit" class="{{$buttonClasses}}"> {{$submitName}}</button>
+        <button id="sign-pad-button-clear" type="button" class="{{$buttonClasses}}">{!! $clearName !!}</button>
+        <button id="sign-pad-button-submit" type="submit" class="{{$buttonClasses}}">{!! $submitName !!}</button>
     </div>
 </div>
 
