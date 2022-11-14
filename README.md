@@ -126,6 +126,13 @@ echo $myModel->signature->getSignatureImagePath();
 echo $myModel->signature->getSignedDocumentPath();
 ```
 
+### Deleting signatures
+
+You can delete your model signature using
+- `deleteSignature()` method in the model.
+```php
+echo $myModel->deleteSignature();
+```
 
 ## Customizing the component
 
