@@ -24,4 +24,9 @@ trait RequiresSignature
     {
         return ! is_null($this->signature);
     }
+
+    public function deleteSignature(): bool
+    {
+        return $this->signature?->delete() ?? false;
+    }
 }
