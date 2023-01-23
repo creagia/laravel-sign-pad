@@ -76,6 +76,7 @@ use Creagia\LaravelSignPad\Contracts\CanBeSigned;
 use Creagia\LaravelSignPad\Contracts\ShouldGenerateSignatureDocument;
 use Creagia\LaravelSignPad\Templates\BladeDocumentTemplate;
 use Creagia\LaravelSignPad\Templates\PdfDocumentTemplate;
+use Creagia\LaravelSignPad\SignatureDocumentTemplate;
 
 class MyModel extends Model implements CanBeSigned, ShouldGenerateSignatureDocument
 {
