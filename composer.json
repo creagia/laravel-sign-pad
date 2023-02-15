@@ -16,6 +16,7 @@
         "tecnickcom/tcpdf": "^6.6.0"
     },
     "require-dev": {
+        "laravel/pint": "^1.0",
         "nunomaduro/collision": "^5.10|^6.0",
         "nunomaduro/larastan": "^1.0|^2.0",
         "orchestra/testbench": "^6.23|^7.0|^8.0",
@@ -24,8 +25,7 @@
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
-        "phpunit/phpunit": "^9.5",
-        "friendsofphp/php-cs-fixer": "dev-master"
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
