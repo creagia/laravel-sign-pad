@@ -39,7 +39,6 @@ class TestCase extends Orchestra
      * Define routes setup.
      *
      * @param  \Illuminate\Routing\Router  $router
-     *
      * @return void
      */
     protected function defineRoutes($router)

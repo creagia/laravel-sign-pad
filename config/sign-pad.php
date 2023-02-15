@@ -34,7 +34,7 @@ return [
         'Name' => '',
         'Location' => '',
         'Reason' => '',
-        'ContactInfo' => ''
+        'ContactInfo' => '',
     ],
 
     /**
