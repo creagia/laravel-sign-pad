@@ -4,8 +4,7 @@ A Laravel package to sign documents and optionally generate
  [certified PDFs](https://www.prepressure.com/pdf/basics/certified-pdf#:~:text=A%20Certified%20PDF%20is%20a,errors%20or%20notifications%20were%20generated) associated to a Eloquent model.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/creagia/laravel-sign-pad.svg?style=flat-square)](https://packagist.org/packages/creagia/laravel-sign-pad)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/creagia/laravel-sign-pad/run-tests?label=tests)](https://github.com/creagia/laravel-sign-pad/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/creagia/laravel-sign-pad/Check%20&%20fix%20styling?label=code%20style)](https://github.com/creagia/laravel-sign-pad/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/creagia/laravel-sign-pad/run-tests.yml?label=tests)](https://github.com/creagia/laravel-sign-pad/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/creagia/laravel-sign-pad.svg?style=flat-square)](https://packagist.org/packages/creagia/laravel-sign-pad)
 
 ## Support us
