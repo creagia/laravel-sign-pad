@@ -4,6 +4,7 @@ namespace Creagia\LaravelSignPad\Actions;
 
 use Creagia\LaravelSignPad\Exceptions\InvalidConfiguration;
 use Creagia\LaravelSignPad\SignatureDocumentTemplate;
+use Creagia\LaravelSignPad\SignaturePosition;
 use Exception;
 use setasign\Fpdi\Tcpdf\Fpdi;
 
@@ -17,25 +18,27 @@ class AppendSignatureDocumentAction
     {
         $this->validateConfig();
 
-        $pdf->setPage($signatureTemplate->signaturePage);
+        foreach ($signatureTemplate->signaturePositions as $signaturePosition) {
+            $pdf->setPage($signaturePosition->signaturePage);
 
-        $pdf->Image(
-            '@'.$decodedImage,
-            $signatureTemplate->signatureX,
-            $signatureTemplate->signatureY,
-            config('sign-pad.width') * 0.26458333 / 2,
-            config('sign-pad.height') * 0.26458333 / 2,
-            'PNG'
-        );
-
-        if (config('sign-pad.certify_documents')) {
-            // Define active area for signature
-            $pdf->setSignatureAppearance(
-                $signatureTemplate->signatureX,
-                $signatureTemplate->signatureY,
+            $pdf->Image(
+                '@' . $decodedImage,
+                $signaturePosition->signatureX,
+                $signaturePosition->signatureY,
                 config('sign-pad.width') * 0.26458333 / 2,
                 config('sign-pad.height') * 0.26458333 / 2,
+                'PNG'
             );
+
+            if (config('sign-pad.certify_documents')) {
+                // Define active area for signature
+                $pdf->setSignatureAppearance(
+                    $signaturePosition->signatureX,
+                    $signaturePosition->signatureY,
+                    config('sign-pad.width') * 0.26458333 / 2,
+                    config('sign-pad.height') * 0.26458333 / 2,
+                );
+            }
         }
 
         return $pdf;
