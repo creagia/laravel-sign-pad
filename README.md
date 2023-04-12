@@ -76,6 +76,7 @@ use Creagia\LaravelSignPad\Contracts\ShouldGenerateSignatureDocument;
 use Creagia\LaravelSignPad\Templates\BladeDocumentTemplate;
 use Creagia\LaravelSignPad\Templates\PdfDocumentTemplate;
 use Creagia\LaravelSignPad\SignatureDocumentTemplate;
+use Creagia\LaravelSignPad\SignaturePosition;
 
 class MyModel extends Model implements CanBeSigned, ShouldGenerateSignatureDocument
 {
@@ -84,12 +85,21 @@ class MyModel extends Model implements CanBeSigned, ShouldGenerateSignatureDocum
     public function getSignatureDocumentTemplate(): SignatureDocumentTemplate
     {
         return new SignatureDocumentTemplate(
-            signaturePage: 1,
-            signatureX: 20,
-            signatureY: 25,
             outputPdfPrefix: 'document', // optional
             // template: new BladeDocumentTemplate('pdf/my-pdf-blade-template'), // Uncomment for Blade template
             // template: new PdfDocumentTemplate(storage_path('pdf/template.pdf')), // Uncomment for PDF template
+            signaturePositions: [
+                 new SignaturePosition(
+                     signaturePage: 1,
+                     signatureX: 20,
+                     signatureY: 25,
+                 ),
+                 new SignaturePosition(
+                     signaturePage: 2,
+                     signatureX: 25,
+                     signatureY: 50,
+                 ),
+            ]               
         );
     }
 }
