@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 /**
  * @property string $uuid
  * @property ?string $document_filename
- * @property boolean $certified
+ * @property bool $certified
  * @property string $filename
  * @property string $model_id
  * @property string $model_type
