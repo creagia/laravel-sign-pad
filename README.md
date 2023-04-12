@@ -38,7 +38,9 @@ This will copy the package assets inside the `public/vendor/sign-pad/` folder.
 
 ## Configuration
 
-In the published config file `config/sign-pad.php` you'll be able to configure many important aspects of the package, like the route name where users will be redirected after signing the document or where do you want to store the signed documents.
+In the published config file `config/sign-pad.php` you'll be able to configure many important aspects of the package, 
+like the route name where users will be redirected after signing the document or where do you want to store the signed documents.
+You can customize the disk and route to store signatures and documents.
 
 Notice that the redirect_route_name will receive the parameter `$uuid` with the uuid of the signature model in the database. 
 
