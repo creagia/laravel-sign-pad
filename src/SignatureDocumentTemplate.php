@@ -7,7 +7,7 @@ use Creagia\LaravelSignPad\Templates\DocumentTemplate;
 class SignatureDocumentTemplate
 {
     /**
-     * @param array<SignaturePosition> $signaturePositions
+     * @param  array<SignaturePosition>  $signaturePositions
      */
     public function __construct(
         public string $outputPdfPrefix,

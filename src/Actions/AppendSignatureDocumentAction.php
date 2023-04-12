@@ -4,7 +4,6 @@ namespace Creagia\LaravelSignPad\Actions;
 
 use Creagia\LaravelSignPad\Exceptions\InvalidConfiguration;
 use Creagia\LaravelSignPad\SignatureDocumentTemplate;
-use Creagia\LaravelSignPad\SignaturePosition;
 use Exception;
 use setasign\Fpdi\Tcpdf\Fpdi;
 
@@ -22,7 +21,7 @@ class AppendSignatureDocumentAction
             $pdf->setPage($signaturePosition->signaturePage);
 
             $pdf->Image(
-                '@' . $decodedImage,
+                '@'.$decodedImage,
                 $signaturePosition->signatureX,
                 $signaturePosition->signatureY,
                 config('sign-pad.width') * 0.26458333 / 2,
