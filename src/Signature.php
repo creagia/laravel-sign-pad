@@ -57,8 +57,20 @@ class Signature extends Model
         return config('sign-pad.signatures_path').'/'.$this->attributes['filename'];
     }
 
+    public function getSignatureImageAbsolutePath(): string
+    {
+        return Storage::disk(config('sign-pad.disk_name'))->path(config('sign-pad.signatures_path').'/'.$this->attributes['filename']);
+    }
+
     public function getSignedDocumentPath(): ?string
     {
         return $this->attributes['document_filename'] ? config('sign-pad.documents_path').'/'.$this->attributes['document_filename'] : null;
+    }
+
+    public function getSignedDocumentAbsolutePath(): ?string
+    {
+        return $this->attributes['document_filename']
+            ? Storage::disk(config('sign-pad.disk_name'))->path(config('sign-pad.documents_path').'/'.$this->attributes['document_filename'])
+            : null;
     }
 }
