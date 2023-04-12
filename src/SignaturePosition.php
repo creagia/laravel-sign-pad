@@ -2,8 +2,6 @@
 
 namespace Creagia\LaravelSignPad;
 
-use Creagia\LaravelSignPad\Templates\DocumentTemplate;
-
 class SignaturePosition
 {
     public function __construct(
