@@ -4,6 +4,7 @@ namespace Creagia\LaravelSignPad\Actions;
 
 use Creagia\LaravelSignPad\Signature;
 use Creagia\LaravelSignPad\SignatureDocumentTemplate;
+use Illuminate\Support\Facades\Storage;
 use setasign\Fpdi\Tcpdf\Fpdi;
 
 class GenerateSignatureDocumentAction
@@ -29,9 +30,10 @@ class GenerateSignatureDocumentAction
         $this->pdf = $signatureDocumentTemplate->template->appendSignature($this->pdf, $decodedImage, $signatureDocumentTemplate);
 
         $destinationFilename = "{$signatureDocumentTemplate->outputPdfPrefix}-{$signature->uuid}.pdf";
-        $filePath = config('sign-pad.store_path').'/'.$destinationFilename;
+        $filePath = config('sign-pad.documents_path').'/'.$destinationFilename;
 
-        $this->pdf->Output($filePath, 'F');
+        Storage::disk(config('sign-pad.disk_name'))->put($filePath, $this->pdf->Output($filePath, 'S'));
+
         $signature->document_filename = $destinationFilename;
         $signature->save();
     }

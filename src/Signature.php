@@ -4,7 +4,7 @@ namespace Creagia\LaravelSignPad;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property string $uuid
@@ -17,7 +17,7 @@ class Signature extends Model
         parent::boot();
 
         static::deleted(function ($model) {
-            File::delete($model->getSignatureImagePath());
+            Storage::disk(config('sign-pad.disk_name'))->delete($model->getSignatureImagePath());
         });
     }
 
@@ -46,11 +46,11 @@ class Signature extends Model
 
     public function getSignatureImagePath(): string
     {
-        return config('sign-pad.store_path').'/'.$this->attributes['filename'];
+        return config('sign-pad.signatures_path').'/'.$this->attributes['filename'];
     }
 
     public function getSignedDocumentPath(): ?string
     {
-        return $this->attributes['document_filename'] ? config('sign-pad.store_path').'/'.$this->attributes['document_filename'] : null;
+        return $this->attributes['document_filename'] ? config('sign-pad.documents_path').'/'.$this->attributes['document_filename'] : null;
     }
 }

@@ -10,7 +10,7 @@ use Creagia\LaravelSignPad\Signature;
 use Exception;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class LaravelSignPadController
@@ -55,8 +55,7 @@ class LaravelSignPadController
             'certified' => config('sign-pad.certify_documents'),
         ]);
 
-        File::ensureDirectoryExists(config('sign-pad.store_path'));
-        File::put($signature->getSignatureImagePath(), $decodedImage);
+        Storage::disk(config('sign-pad.disk_name'))->put($signature->getSignatureImagePath(), $decodedImage);
 
         if ($model instanceof ShouldGenerateSignatureDocument) {
             ($generateSignatureDocumentAction)(
