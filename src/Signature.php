@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Storage;
 /**
  * @property string $uuid
  * @property ?string $document_filename
+ * @property boolean $certified
+ * @property string $filename
+ * @property string $model_id
+ * @property string $model_type
+ * @property array $from_ips
  */
 class Signature extends Model
 {
@@ -32,13 +37,16 @@ class Signature extends Model
     ];
 
     /**
-     * @var array<string>
+     * @var array<string, string>
      */
     protected $casts = [
         'from_ips' => 'array',
         'certified' => 'boolean',
     ];
 
+    /**
+     * @return MorphTo<Model, Signature>
+     */
     public function model(): MorphTo
     {
         return $this->morphTo();
