@@ -1,7 +1,7 @@
 <?php
 
 return [
-    /*
+    /**
      * The disk on which to store signature images. Choose one or more of
      * the disks you've configured in config/filesystems.php.
      */
