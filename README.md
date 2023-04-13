@@ -190,3 +190,11 @@ When the variable `certify_documents` is set to true, the package will search th
 Inside the same `config/sign-pad.php` we encourage you to fill all the fields of the array `certificate_info` to be more specific with the certificate.
 
 Finally, you can change the certificate type by modifying the value of the variable `cert_type` (by default 2). You can find more information about certificates types at [TCPDF setSignature reference](https://hooks.wbcomdesigns.com/reference/classes/tcpdf/setsignature/).
+
+## Upgrading
+
+See [UPGRADING](UPGRADING.md) for details.
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
