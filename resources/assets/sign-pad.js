@@ -2,12 +2,18 @@ import SignaturePad from 'signature_pad';
 
 const eSignpads = document.querySelectorAll('.e-signpad');
 
+let submitted = false;
+
 eSignpads.forEach(function(eSignpad) {
     let signaturePad = new SignaturePad(eSignpad.querySelector('canvas')),
         submit = eSignpad.querySelector('.sign-pad-button-submit'),
         clear = eSignpad.querySelector('.sign-pad-button-clear');
 
-    submit.addEventListener('click', function () {
+    submit.addEventListener('click', function (event) {
+        if (submitted) {
+            event.preventDefault();
+        }
+        submitted = true;
         eSignpad.querySelector('.sign').value = signaturePad.toDataURL();
     });
 
