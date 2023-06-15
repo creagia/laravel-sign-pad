@@ -28,7 +28,7 @@ let resizeCanvas = () => {
         let canvas = eSignPad.querySelector('canvas');
 
         if (canvas.width > window.innerWidth) {
-            let signaturePad = new SignaturePad(eSignpad.querySelector('canvas'));
+            let signaturePad = new SignaturePad(eSignPad.querySelector('canvas'));
             const ratio = Math.max(window.devicePixelRatio || 1, 1);
 
             canvas.width = canvas.offsetWidth * ratio;
