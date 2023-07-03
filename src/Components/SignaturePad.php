@@ -20,6 +20,8 @@ class SignaturePad extends Component
 
     public string $clearName;
 
+    public bool $disabledWithoutSignature;
+
     /**
      * Create a new component instance.
      *
@@ -32,7 +34,8 @@ class SignaturePad extends Component
         string $buttonClasses = '',
         string $borderColor = '#777777',
         string $submitName = 'Submit',
-        string $clearName = 'Clear'
+        string $clearName = 'Clear',
+        bool $disabledWithoutSignature = false
     ) {
         $this->width = $width ?? config('sign-pad.width');
         $this->height = $height ?? config('sign-pad.height');
@@ -44,6 +47,8 @@ class SignaturePad extends Component
 
         $this->submitName = $submitName;
         $this->clearName = $clearName;
+
+        $this->disabledWithoutSignature = $disabledWithoutSignature;
     }
 
     /**
