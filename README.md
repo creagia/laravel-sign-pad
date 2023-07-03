@@ -166,7 +166,7 @@ An example with an app using Tailwind would be:
       button-classes="bg-gray-100 px-4 py-2 rounded-xl mt-4"
       clear-name="Clear"
       submit-name="Submit"
-      disabled-without-signature="true"
+      :disabled-without-signature="true"
   />
 ```
 
