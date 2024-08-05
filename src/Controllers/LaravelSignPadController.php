@@ -40,7 +40,7 @@ class LaravelSignPadController
             abort(403, 'Invalid token');
         }
 
-        if ($model instanceof CanBeSigned and $model->hasBeenSigned()) {
+        if ($model instanceof CanBeSigned && $model->hasBeenSigned()) {
             throw new ModelHasAlreadyBeenSigned();
         }
 
