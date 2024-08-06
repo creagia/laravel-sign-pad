@@ -3,7 +3,7 @@
 use Creagia\LaravelSignPad\Components\SignaturePad;
 
 it('has default component values', function () {
-    $signPadComponent = new SignaturePad();
+    $signPadComponent = new SignaturePad;
 
     $this->assertTrue($signPadComponent->submitName === 'Submit');
     $this->assertTrue($signPadComponent->clearName === 'Clear');

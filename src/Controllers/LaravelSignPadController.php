@@ -6,7 +6,6 @@ use Creagia\LaravelSignPad\Actions\GenerateSignatureDocumentAction;
 use Creagia\LaravelSignPad\Contracts\CanBeSigned;
 use Creagia\LaravelSignPad\Contracts\ShouldGenerateSignatureDocument;
 use Creagia\LaravelSignPad\Exceptions\ModelHasAlreadyBeenSigned;
-use Creagia\LaravelSignPad\Signature;
 use Exception;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
@@ -41,7 +40,7 @@ class LaravelSignPadController
         }
 
         if ($model instanceof CanBeSigned && $model->hasBeenSigned()) {
-            throw new ModelHasAlreadyBeenSigned();
+            throw new ModelHasAlreadyBeenSigned;
         }
 
         $uuid = Str::uuid()->toString();

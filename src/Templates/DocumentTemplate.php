@@ -15,8 +15,7 @@ abstract class DocumentTemplate
      */
     public function __construct(
         public string $path
-    ) {
-    }
+    ) {}
 
     abstract public function appendPages(Fpdi $pdf, Signature $signature): Fpdi;
 

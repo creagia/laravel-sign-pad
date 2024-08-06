@@ -28,8 +28,8 @@ class SignaturePad extends Component
      * @return void
      */
     public function __construct(
-        float $width = null,
-        float $height = null,
+        ?float $width = null,
+        ?float $height = null,
         string $padClasses = '',
         string $buttonClasses = '',
         string $borderColor = '#777777',

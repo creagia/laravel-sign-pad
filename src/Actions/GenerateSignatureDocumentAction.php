@@ -11,8 +11,7 @@ class GenerateSignatureDocumentAction
 {
     public function __construct(
         private Fpdi $pdf,
-    ) {
-    }
+    ) {}
 
     public function __invoke(Signature $signature, SignatureDocumentTemplate $signatureDocumentTemplate, string $decodedImage): void
     {
