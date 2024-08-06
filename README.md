@@ -12,7 +12,7 @@ A Laravel package to sign documents and optionally generate
 
 ## Requirements
 
-Laravel pad signature requires **PHP 8.0, 8.1 or 8.2** and **Laravel 8, 9 or 10**.
+Laravel pad signature requires **PHP 8.0, 8.1, 8.2 or 8.3** and **Laravel 8, 9, 10 or 11**.
 
 ## Installation
 
@@ -113,7 +113,7 @@ A `$model` object will be automatically injected into the Blade template, so you
 
 ## Usage
 
-At this point, all you need is to create the form with the sign pad canvas in your template. For the route of the form, you have to call the method getSignatureUrl() from the instance of the model you prepared before:
+At this point, all you need is to create the form with the sign pad canvas in your template. For the route of the form, you have to call the method getSignatureRoute() from the instance of the model you prepared before:
 
 ```html
 @if (!$myModel->hasBeenSigned())

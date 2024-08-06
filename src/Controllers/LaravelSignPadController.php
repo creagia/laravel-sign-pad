@@ -40,15 +40,13 @@ class LaravelSignPadController
             abort(403, 'Invalid token');
         }
 
-        if ($model instanceof CanBeSigned and $model->hasBeenSigned()) {
+        if ($model instanceof CanBeSigned && $model->hasBeenSigned()) {
             throw new ModelHasAlreadyBeenSigned();
         }
 
         $uuid = Str::uuid()->toString();
         $filename = "{$uuid}.png";
-        $signature = Signature::create([
-            'model_type' => $model::class,
-            'model_id' => $model->id,
+        $signature = $model->signature()->create([
             'uuid' => $uuid,
             'from_ips' => $request->ips(),
             'filename' => $filename,
