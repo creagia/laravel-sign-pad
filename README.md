@@ -7,9 +7,6 @@ A Laravel package to sign documents and optionally generate
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/creagia/laravel-sign-pad/run-tests.yml?label=tests)](https://github.com/creagia/laravel-sign-pad/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/creagia/laravel-sign-pad.svg?style=flat-square)](https://packagist.org/packages/creagia/laravel-sign-pad)
 
-## Support us
-[<img width="570" alt="Laradir banner" src="https://user-images.githubusercontent.com/240932/189903723-2c015907-b8c9-4ff7-b6e6-2c8cf10aea16.png">](https://laradir.com/?utm_campaign=github&utm_medium=banner&utm_term=laravel-sign-pad)
-
 ## Requirements
 
 Laravel pad signature requires **PHP 8.0, 8.1, 8.2 or 8.3** and **Laravel 8, 9, 10 or 11**.
