@@ -9,7 +9,7 @@ A Laravel package to sign documents and optionally generate
 
 ## Requirements
 
-Laravel pad signature requires **PHP 8.0, 8.1, 8.2 or 8.3** and **Laravel 8, 9, 10 or 11**.
+Laravel pad signature requires **PHP 8.0 - 8.4** and **Laravel 8 - 12**.
 
 ## Installation
 
