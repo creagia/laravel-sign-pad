@@ -26,7 +26,7 @@
     "signature_pad": "^4.0.0"
   },
   "devDependencies": {
-    "webpack": "^5.74.0",
+    "webpack": "^5.104.1",
     "webpack-cli": "^4.10.0"
   }
 }
