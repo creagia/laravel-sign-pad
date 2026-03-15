@@ -1,5 +1,6 @@
 <?php
 
+use Creagia\LaravelSignPad\Signature;
 use Creagia\LaravelSignPad\Tests\Models\TestModel;
 use Creagia\LaravelSignPad\Tests\TestClasses\TestSignature;
 use Illuminate\Http\Response;
@@ -38,9 +39,9 @@ it('stores the signature image and deletes', function () {
     $this->post($model1->getSignatureRoute(), ['sign' => $sign]);
     $this->post($model2->getSignatureRoute(), ['sign' => $sign]);
 
-    /** @var \Creagia\LaravelSignPad\Signature $signature1 */
+    /** @var Signature $signature1 */
     $signature1 = $model1->signature;
-    /** @var \Creagia\LaravelSignPad\Signature $signature2 */
+    /** @var Signature $signature2 */
     $signature2 = $model2->signature;
 
     Storage::disk(config('sign-pad.disk_name'))->assertExists($filePath = $signature1->getSignatureImagePath());

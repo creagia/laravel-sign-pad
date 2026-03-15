@@ -4,6 +4,7 @@ namespace Creagia\LaravelSignPad\Tests;
 
 use Creagia\LaravelSignPad\LaravelSignPadServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Routing\Router;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -38,7 +39,7 @@ class TestCase extends Orchestra
     /**
      * Define routes setup.
      *
-     * @param  \Illuminate\Routing\Router  $router
+     * @param  Router  $router
      * @return void
      */
     protected function defineRoutes($router)

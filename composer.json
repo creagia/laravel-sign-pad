@@ -1,62 +1,62 @@
 {
-    "name": "creagia/laravel-sign-pad",
-    "description": "Laravel package for of E-Signature with Signature Pad and Digital Certified Sign with TCPDF",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "creagia",
-            "email": "info@creagia.com"
-        }
-    ],
-    "require": {
-        "php": "^8.2",
-        "illuminate/contracts": "^11.0|^12.0|^13.0",
-        "spatie/laravel-package-tools": "^1.12.1",
-        "setasign/fpdi": "^v2.0.0",
-        "tecnickcom/tcpdf": "^6.6.0"
-    },
-    "require-dev": {
-        "larastan/larastan": "^3.9",
-        "laravel/pint": "^1.0",
-        "nunomaduro/collision": "^8.0",
-        "orchestra/testbench": "^9.0|^10.0|^11.0",
-        "pestphp/pest": "^2.34|^3.7|^4.4",
-        "pestphp/pest-plugin-laravel": "^2.3|^3.1|^4.1",
-        "phpstan/extension-installer": "^1.1",
-        "phpstan/phpstan-deprecation-rules": "^1.0|^2.0",
-        "phpstan/phpstan-phpunit": "^1.0|^2.0",
-        "phpunit/phpunit": "^10.5|^11.5.3|^12.5"
-    },
-    "autoload": {
-        "psr-4": {
-            "Creagia\\LaravelSignPad\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Creagia\\LaravelSignPad\\Tests\\": "tests"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Creagia\\LaravelSignPad\\LaravelSignPadServiceProvider"
-            ]
-        }
-    },
-    "scripts": {
-        "analyse": "vendor/bin/phpstan analyse",
-        "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest coverage",
-        "format": "vendor/bin/pint"
-    },
-    "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true,
-            "phpstan/extension-installer": true
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+  "name": "creagia/laravel-sign-pad",
+  "description": "Laravel package for of E-Signature with Signature Pad and Digital Certified Sign with TCPDF",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "creagia",
+      "email": "info@creagia.com"
+    }
+  ],
+  "require": {
+    "php": "^8.2",
+    "illuminate/contracts": "^11.0|^12.0|^13.0",
+    "spatie/laravel-package-tools": "^1.12.1",
+    "setasign/fpdi": "^v2.0.0",
+    "tecnickcom/tcpdf": "^6.6.0"
+  },
+  "require-dev": {
+    "larastan/larastan": "^3.9",
+    "laravel/pint": "^1.0",
+    "nunomaduro/collision": "^8.0",
+    "orchestra/testbench": "^9.0|^10.0|^11.0",
+    "pestphp/pest": "^2.34|^3.7|^4.4",
+    "pestphp/pest-plugin-laravel": "^2.3|^3.1|^4.1",
+    "phpstan/extension-installer": "^1.1",
+    "phpstan/phpstan-deprecation-rules": "^1.0|^2.0",
+    "phpstan/phpstan-phpunit": "^1.0|^2.0",
+    "phpunit/phpunit": "^10.5|^11.5.3|^12.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Creagia\\LaravelSignPad\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Creagia\\LaravelSignPad\\Tests\\": "tests"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Creagia\\LaravelSignPad\\LaravelSignPadServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "analyse": "vendor/bin/phpstan analyse",
+    "test": "vendor/bin/pest",
+    "test-coverage": "vendor/bin/pest coverage",
+    "format": "vendor/bin/pint"
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true,
+      "phpstan/extension-installer": true
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
