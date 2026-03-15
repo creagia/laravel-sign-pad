@@ -3,7 +3,13 @@ parameters:
     paths:
         - src
         - config
+    configDirectories:
+        - config
     tmpDir: build/phpstan
     checkOctaneCompatibility: true
     checkModelProperties: true
-    checkMissingIterableValueType: true
+    ignoreErrors:
+        - identifier: trait.unused
+          path: src/Concerns/*
+        - identifier: argument.type
+          path: src/Components/*

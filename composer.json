@@ -16,9 +16,9 @@
         "tecnickcom/tcpdf": "^6.6.0"
     },
     "require-dev": {
+        "larastan/larastan": "^3.9",
         "laravel/pint": "^1.0",
         "nunomaduro/collision": "^8.0",
-        "nunomaduro/larastan": "^2.0|^3.0",
         "orchestra/testbench": "^9.0|^10.0|^11.0",
         "pestphp/pest": "^2.34|^3.7|^4.4",
         "pestphp/pest-plugin-laravel": "^2.3|^3.1|^4.1",
@@ -48,7 +48,7 @@
         "analyse": "vendor/bin/phpstan analyse",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest coverage",
-        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+        "format": "vendor/bin/pint"
     },
     "config": {
         "sort-packages": true,

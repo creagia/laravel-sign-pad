@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
  * @property string $filename
  * @property string $model_id
  * @property string $model_type
- * @property array $from_ips
+ * @property array<int, string> $from_ips
  */
 class Signature extends Model
 {
@@ -45,7 +45,7 @@ class Signature extends Model
     ];
 
     /**
-     * @return MorphTo<Model, Signature>
+     * @return MorphTo<Model, $this>
      */
     public function model(): MorphTo
     {
