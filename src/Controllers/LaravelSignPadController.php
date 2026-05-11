@@ -63,6 +63,10 @@ class LaravelSignPadController
             );
         }
 
+        if ($request->filled('redirect_url')) {
+            return redirect()->to($request->input('redirect_url'));
+        }
+
         return back();
     }
 }

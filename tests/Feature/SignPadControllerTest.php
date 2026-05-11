@@ -55,3 +55,27 @@ it('stores the signature image and deletes', function () {
     Storage::disk(config('sign-pad.disk_name'))->assertMissing($filePath);
     Storage::disk(config('sign-pad.disk_name'))->assertExists($signature2->getSignatureImagePath());
 });
+
+it('redirects back by default when redirect_url is not provided', function () {
+    Storage::fake(config('sign-pad.disk_name'));
+    $model = TestModel::create();
+    $sign = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAADICAYAAAA0n5+2AAAAAXNSR0IArs4c6QAAEG1JREFUeF7t3U2odVUZB/C/BObMV6pBkOhAjXJgIYSRYk2CBqERUY3UCo2w1EkfkzSCqElpkG';
+
+    $response = $this->from('/original-page')
+        ->post($model->getSignatureRoute(), ['sign' => $sign]);
+
+    $response->assertRedirect('/original-page');
+});
+
+it('redirects to custom url when redirect_url is provided', function () {
+    Storage::fake(config('sign-pad.disk_name'));
+    $model = TestModel::create();
+    $sign = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAADICAYAAAA0n5+2AAAAAXNSR0IArs4c6QAAEG1JREFUeF7t3U2odVUZB/C/BObMV6pBkOhAjXJgIYSRYk2CBqERUY3UCo2w1EkfkzSCqElpkG';
+
+    $response = $this->post($model->getSignatureRoute(), [
+        'sign' => $sign,
+        'redirect_url' => '/custom-dashboard',
+    ]);
+
+    $response->assertRedirect('/custom-dashboard');
+});
