@@ -5,6 +5,9 @@
             class="{{ $padClasses }}"></canvas>
     <div>
         <input type="hidden" name="sign" class="sign">
+        @if($redirectUrl)
+            <input type="hidden" name="redirect_url" value="{{ $redirectUrl }}">
+        @endif
         <button type="button" class="sign-pad-button-clear {{$buttonClasses}}">{!! $clearName !!}</button>
         <button type="submit" class="sign-pad-button-submit {{$buttonClasses}}" {{ $disabledWithoutSignature ? 'disabled' : '' }}>{!! $submitName !!}</button>
     </div>

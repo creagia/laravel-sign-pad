@@ -8,6 +8,7 @@ it('has default component values', function () {
     $this->assertTrue($signPadComponent->submitName === 'Submit');
     $this->assertTrue($signPadComponent->clearName === 'Clear');
     $this->assertTrue($signPadComponent->borderColor === '#777777');
+    $this->assertTrue($signPadComponent->redirectUrl === '');
 });
 
 it('can override default component values', function () {
@@ -20,4 +21,13 @@ it('can override default component values', function () {
     $this->assertTrue($signPadComponent->submitName === 'Envia');
     $this->assertTrue($signPadComponent->clearName === 'Borra');
     $this->assertTrue($signPadComponent->borderColor === '#EAEAEA');
+    $this->assertTrue($signPadComponent->redirectUrl === '');
+});
+
+it('can set redirect url on component', function () {
+    $signPadComponent = new SignaturePad(
+        redirectUrl: '/custom-redirect'
+    );
+
+    $this->assertTrue($signPadComponent->redirectUrl === '/custom-redirect');
 });

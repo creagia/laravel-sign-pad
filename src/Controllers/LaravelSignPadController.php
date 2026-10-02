@@ -63,6 +63,10 @@ class LaravelSignPadController
             );
         }
 
-        return redirect()->route(config('sign-pad.redirect_route_name'), ['uuid' => $uuid]);
+        if ($request->filled('redirect_url')) {
+            return redirect()->to($request->input('redirect_url'));
+        }
+
+        return back();
     }
 }
